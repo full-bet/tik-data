@@ -7,6 +7,7 @@ const navItems = [
   { href: '/dashboard', label: 'ダッシュボード', icon: '📊' },
   { href: '/scripts', label: '台本一覧', icon: '📝' },
   { href: '/accounts', label: 'TikTokアカウント', icon: '🔗' },
+  { href: '/docs', label: 'ドキュメント', icon: '📄' },
 ]
 
 export default async function ProtectedLayout({ children }: { children: React.ReactNode }) {
