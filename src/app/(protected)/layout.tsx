@@ -4,8 +4,8 @@ import Link from 'next/link'
 import { signOut } from '@/lib/actions'
 
 const navItems = [
-  { href: '/dashboard', label: 'ダッシュボード', icon: '📊' },
-  { href: '/scripts', label: '台本一覧', icon: '📝' },
+  { href: '/items', label: '投稿管理', icon: '📋' },
+  { href: '/analytics', label: 'アナリティクス', icon: '📊' },
   { href: '/accounts', label: 'TikTokアカウント', icon: '🔗' },
   { href: '/docs', label: 'ドキュメント', icon: '📄' },
 ]

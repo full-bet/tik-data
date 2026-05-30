@@ -1,12 +1,4 @@
-import {
-  pgTable,
-  uuid,
-  text,
-  timestamp,
-  date,
-  bigint,
-  unique,
-} from 'drizzle-orm/pg-core'
+import { pgTable, uuid, text, timestamp, bigint, integer, numeric } from 'drizzle-orm/pg-core'
 
 export const accounts = pgTable('accounts', {
   id:                  uuid('id').primaryKey().defaultRandom(),
@@ -18,42 +10,67 @@ export const accounts = pgTable('accounts', {
   access_token:        text('access_token').notNull(),
   refresh_token:       text('refresh_token'),
   token_expires_at:    timestamp('token_expires_at', { withTimezone: true }),
-  created_at:          timestamp('created_at',  { withTimezone: true }).defaultNow(),
-  updated_at:          timestamp('updated_at',  { withTimezone: true }).defaultNow(),
+  created_at:          timestamp('created_at', { withTimezone: true }).defaultNow(),
+  updated_at:          timestamp('updated_at', { withTimezone: true }).defaultNow(),
 })
 
-export const scripts = pgTable('scripts', {
+export const items = pgTable('items', {
   id:         uuid('id').primaryKey().defaultRandom(),
   user_id:    uuid('user_id').notNull(),
-  title:      text('title').notNull(),
-  content:    text('content'),
-  category:   text('category'),
-  hook:       text('hook'),
+  account_id: uuid('account_id'),
+
+  // 動画
+  video_title: text('video_title').notNull(),
+  video_url:   text('video_url'),
+  posted_at:   timestamp('posted_at', { withTimezone: true }),
+
+  // 台本
+  script_content: text('script_content'),
+  category:       text('category'),
+  hook:           text('hook'),
+
+  // 累計指標
+  views:            bigint('views',            { mode: 'number' }).default(0),
+  likes:            bigint('likes',            { mode: 'number' }).default(0),
+  followers_gained: bigint('followers_gained', { mode: 'number' }).default(0),
+  cv_count:         bigint('cv_count',         { mode: 'number' }).default(0),
+
+  // 初動（72h）指標
+  initial_views:            bigint('initial_views',            { mode: 'number' }).default(0),
+  initial_likes:            bigint('initial_likes',            { mode: 'number' }).default(0),
+  initial_followers_gained: bigint('initial_followers_gained', { mode: 'number' }).default(0),
+  initial_cv_count:         bigint('initial_cv_count',         { mode: 'number' }).default(0),
+
   created_at: timestamp('created_at', { withTimezone: true }).defaultNow(),
   updated_at: timestamp('updated_at', { withTimezone: true }).defaultNow(),
 })
 
-export const posts = pgTable('posts', {
-  id:               uuid('id').primaryKey().defaultRandom(),
-  user_id:          uuid('user_id').notNull(),
-  script_id:        uuid('script_id'),
-  account_id:       uuid('account_id').notNull(),
-  tiktok_video_id:  text('tiktok_video_id').notNull().unique(),
-  tiktok_title:     text('tiktok_title'),
-  posted_at:        timestamp('posted_at', { withTimezone: true }),
-  created_at:       timestamp('created_at', { withTimezone: true }).defaultNow(),
+export const analyticsImports = pgTable('analytics_imports', {
+  id:           uuid('id').primaryKey().defaultRandom(),
+  user_id:      uuid('user_id').notNull(),
+  filename:     text('filename').notNull(),
+  imported_at:  timestamp('imported_at',  { withTimezone: true }).defaultNow(),
+  processed_at: timestamp('processed_at', { withTimezone: true }),
+  row_count:    integer('row_count').default(0),
+  status:       text('status').default('pending'), // pending | processing | done | error
+  error_message: text('error_message'),
+  created_at:   timestamp('created_at', { withTimezone: true }).defaultNow(),
 })
 
-export const postMetrics = pgTable(
-  'post_metrics',
-  {
-    id:          uuid('id').primaryKey().defaultRandom(),
-    post_id:     uuid('post_id').notNull(),
-    recorded_at: date('recorded_at').notNull(),
-    views:       bigint('views',    { mode: 'number' }).default(0),
-    likes:       bigint('likes',    { mode: 'number' }).default(0),
-    comments:    bigint('comments', { mode: 'number' }).default(0),
-    shares:      bigint('shares',   { mode: 'number' }).default(0),
-  },
-  t => [unique().on(t.post_id, t.recorded_at)]
-)
+export const analyticsSnapshots = pgTable('analytics_snapshots', {
+  id:               uuid('id').primaryKey().defaultRandom(),
+  user_id:          uuid('user_id').notNull(),
+  import_id:        uuid('import_id').notNull(),
+  video_title:      text('video_title'),
+  video_id:         text('video_id'),
+  post_date:        text('post_date'),
+  views:            bigint('views',         { mode: 'number' }).default(0),
+  likes:            bigint('likes',         { mode: 'number' }).default(0),
+  comments:         bigint('comments',      { mode: 'number' }).default(0),
+  shares:           bigint('shares',        { mode: 'number' }).default(0),
+  reach:            bigint('reach',         { mode: 'number' }).default(0),
+  watch_time_mins:  numeric('watch_time_mins').default('0'),
+  profile_views:    bigint('profile_views', { mode: 'number' }).default(0),
+  new_followers:    bigint('new_followers', { mode: 'number' }).default(0),
+  created_at:       timestamp('created_at', { withTimezone: true }).defaultNow(),
+})
