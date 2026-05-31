@@ -7,6 +7,7 @@ import { signOut } from '@/lib/actions'
 const navItems = [
   { href: '/items', label: '投稿管理', icon: '📋' },
   { href: '/analytics', label: 'アナリティクス', icon: '📊' },
+  { href: '/competitors', label: '競合分析', icon: '🔍' },
   { href: '/accounts', label: 'TikTokアカウント', icon: '🔗' },
   { href: '/docs', label: 'ドキュメント', icon: '📄' },
 ]

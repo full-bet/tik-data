@@ -46,6 +46,25 @@ export const items = pgTable('items', {
   updated_at: timestamp('updated_at', { withTimezone: true }).defaultNow(),
 })
 
+export const competitors = pgTable('competitors', {
+  id:           uuid('id').primaryKey().defaultRandom(),
+  user_id:      uuid('user_id').notNull(),
+  url:          text('url').notNull(),
+  platform:     text('platform').default('tiktok'),
+  video_title:  text('video_title'),
+  creator_name: text('creator_name'),
+  posted_at:    timestamp('posted_at', { withTimezone: true }),
+  thumbnail_url: text('thumbnail_url'),
+  transcript:   text('transcript'),      // Whisper文字起こし
+  hook:         text('hook'),            // AI抽出: 冒頭フック
+  structure:    text('structure'),       // AI抽出: 構成（JSON文字列）
+  cta:          text('cta'),             // AI抽出: CTA
+  ai_summary:   text('ai_summary'),      // AI全体まとめ
+  notes:        text('notes'),           // 手動メモ
+  created_at:   timestamp('created_at', { withTimezone: true }).defaultNow(),
+  updated_at:   timestamp('updated_at', { withTimezone: true }).defaultNow(),
+})
+
 export const analyticsImports = pgTable('analytics_imports', {
   id:           uuid('id').primaryKey().defaultRandom(),
   user_id:      uuid('user_id').notNull(),
