@@ -20,77 +20,102 @@ export interface VideoRow {
   completion_rate?: number
 }
 
-// TikTok Creator Center export column names (English + Japanese variants)
+// Lowercase → field mapping (case-insensitive matching)
 const COL_MAP: Record<string, keyof VideoRow> = {
-  // video_title
-  'Video name': 'video_title',
-  'Video title': 'video_title',
+  'video name': 'video_title',
+  'video title': 'video_title',
+  'title': 'video_title',
   '動画タイトル': 'video_title',
   'タイトル': 'video_title',
-  // video_id
-  'ID': 'video_id',
-  'Video ID': 'video_id',
-  '動画ID': 'video_id',
-  // post_date
-  'Posted': 'post_date',
-  'Post time': 'post_date',
+
+  'id': 'video_id',
+  'video id': 'video_id',
+  '動画id': 'video_id',
+
+  'posted': 'post_date',
+  'post time': 'post_date',
   '投稿日時': 'post_date',
   '投稿日': 'post_date',
-  // duration
-  'Duration': 'duration',
+
+  'duration': 'duration',
   '動画時間': 'duration',
   '尺': 'duration',
-  // views
-  'Views': 'views',
-  'Video views': 'views',
+
+  'views': 'views',
+  'video views': 'views',
   '動画再生数': 'views',
   '再生数': 'views',
-  // likes
-  'Likes': 'likes',
+
+  'likes': 'likes',
   'いいね数': 'likes',
-  // comments
-  'Comments': 'comments',
+
+  'comments': 'comments',
   'コメント数': 'comments',
-  // shares
-  'Shares': 'shares',
+
+  'shares': 'shares',
   'シェア数': 'shares',
-  // reach
-  'Reach': 'reach',
+
+  'reach': 'reach',
   'リーチ': 'reach',
-  // watch_time_mins
-  'Total play time (min)': 'watch_time_mins',
-  'Watch time (minutes)': 'watch_time_mins',
+
+  'total play time (min)': 'watch_time_mins',
+  'watch time (minutes)': 'watch_time_mins',
   '合計視聴時間（分）': 'watch_time_mins',
-  // profile_views
-  'Profile views': 'profile_views',
+
+  'profile views': 'profile_views',
   'プロフィール閲覧数': 'profile_views',
-  // new_followers
-  'New followers': 'new_followers',
+
+  'new followers': 'new_followers',
   'フォロワー増加数': 'new_followers',
-  // GMV / commerce
-  'GMV': 'gmv',
-  'Direct GMV': 'direct_gmv',
-  'Items sold': 'items_sold',
+
+  'gmv': 'gmv',
+  'direct gmv': 'direct_gmv',
+
+  'items sold': 'items_sold',
   '販売個数': 'items_sold',
-  // rates
-  'CTR': 'ctr',
-  'Completion': 'completion_rate',
-  'Completion rate': 'completion_rate',
+
+  'ctr': 'ctr',
+
+  'completion': 'completion_rate',
+  'completion rate': 'completion_rate',
   '完了率': 'completion_rate',
 }
 
-/** 数値テキストを数値に変換。「円」「%」「,」を除去 */
+/** 正規化：不可視文字・BOM・前後空白を除去してlowercase */
+function normalize(s: string): string {
+  return s
+    .replace(/^﻿/, '')          // BOM
+    .replace(/[​-‍﻿]/g, '') // zero-width chars
+    .trim()
+    .toLowerCase()
+}
+
+/** 数値テキストを数値に変換（「円」「%」「,」除去） */
 function toNum(v: unknown): number {
   if (v == null) return 0
-  const s = String(v).replace(/[円,%]/g, '').trim()
+  const s = String(v).replace(/[円,%\s]/g, '').trim()
   const n = Number(s)
   return isNaN(n) ? 0 : n
+}
+
+/** シート全行から「認識できる列が最も多い行」をヘッダー行として探す */
+function findHeaderRow(rows: unknown[][]): number {
+  let bestScore = 0
+  let bestIdx = 0
+  for (let i = 0; i < Math.min(rows.length, 10); i++) {
+    const row = rows[i] as unknown[]
+    const score = row.filter(cell =>
+      cell != null && COL_MAP[normalize(String(cell))] !== undefined
+    ).length
+    if (score > bestScore) { bestScore = score; bestIdx = i }
+  }
+  return bestIdx
 }
 
 export function parseXlsxBuffer(buffer: ArrayBuffer): VideoRow[] {
   const workbook = XLSX.read(new Uint8Array(buffer), { type: 'array', cellDates: true })
 
-  // Pick the sheet with the most rows
+  // シートの中で行数が最も多いものを選ぶ
   let bestSheet: XLSX.WorkSheet | null = null
   let bestCount = 0
   for (const name of workbook.SheetNames) {
@@ -103,15 +128,35 @@ export function parseXlsxBuffer(buffer: ArrayBuffer): VideoRow[] {
   }
   if (!bestSheet) return []
 
-  const raw = XLSX.utils.sheet_to_json(bestSheet, { defval: null }) as Record<string, unknown>[]
+  // header:1 で全セルを生の2次元配列として取得
+  const allRows = XLSX.utils.sheet_to_json(bestSheet, {
+    header: 1,
+    defval: null,
+  }) as unknown[][]
 
+  // ヘッダー行を動的に探す
+  const headerIdx = findHeaderRow(allRows)
+  const headerRow = allRows[headerIdx] as unknown[]
+
+  // 列インデックス → フィールド名 のマップを構築
+  const colIndexToField = new Map<number, keyof VideoRow>()
+  headerRow.forEach((cell, idx) => {
+    if (cell == null) return
+    const field = COL_MAP[normalize(String(cell))]
+    if (field) colIndexToField.set(idx, field)
+  })
+
+  if (colIndexToField.size === 0) return []
+
+  // ヘッダー行の次の行からデータを読む
   const results: VideoRow[] = []
-  for (const row of raw) {
-    const r: VideoRow = {}
-    for (const [key, value] of Object.entries(row)) {
-      const field = COL_MAP[key.trim()]
-      if (!field) continue
+  for (let i = headerIdx + 1; i < allRows.length; i++) {
+    const row = allRows[i] as unknown[]
+    if (!row || row.every(c => c == null)) continue
 
+    const r: VideoRow = {}
+    colIndexToField.forEach((field, idx) => {
+      const value = row[idx]
       if (field === 'video_title') {
         r.video_title = value != null ? String(value) : undefined
       } else if (field === 'video_id') {
@@ -121,10 +166,12 @@ export function parseXlsxBuffer(buffer: ArrayBuffer): VideoRow[] {
       } else {
         ;(r as Record<string, number>)[field] = toNum(value)
       }
-    }
+    })
+
     if (r.video_title || r.video_id || (r.views ?? 0) > 0) {
       results.push(r)
     }
   }
+
   return results
 }
