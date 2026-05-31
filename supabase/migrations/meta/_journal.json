@@ -15,6 +15,13 @@
       "when": 1780125904285,
       "tag": "0001_loving_franklin_richards",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1780212861493,
+      "tag": "0002_majestic_pestilence",
+      "breakpoints": true
     }
   ]
 }

@@ -11,6 +11,15 @@ export default async function ItemDetailPage({ params }: { params: Promise<{ id:
   const { data: item } = await supabase.from('items').select('*').eq('id', id).single()
   if (!item) notFound()
 
+  // 最新スナップショット（xlsxインポートデータ）
+  const { data: snapshot } = await supabase
+    .from('analytics_snapshots')
+    .select('views,likes,comments,shares,new_followers,gmv,direct_gmv,items_sold,ctr,completion_rate,duration,post_date,import_id')
+    .eq('item_id', id)
+    .order('created_at', { ascending: false })
+    .limit(1)
+    .single()
+
   return (
     <div className="p-8 max-w-3xl">
       <div className="mb-6">
@@ -50,9 +59,47 @@ export default async function ItemDetailPage({ params }: { params: Promise<{ id:
         <SaveTextarea itemId={id} field="script_content" defaultValue={item.script_content ?? ''} placeholder="台本の内容を入力、またはMP4をアップロードして自動生成..." />
       </div>
 
+      {/* xlsxインポートデータ */}
+      {snapshot && (
+        <div className="bg-white rounded-xl border border-slate-200 p-6 mb-5">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="font-semibold text-slate-800">アナリティクス（最新インポート）</h2>
+            <span className="text-xs text-slate-400">尺: {snapshot.duration ?? '—'}</span>
+          </div>
+          <div className="grid grid-cols-3 gap-3 mb-4">
+            {[
+              { label: '再生数',        value: (snapshot.views ?? 0).toLocaleString() },
+              { label: 'いいね',        value: (snapshot.likes ?? 0).toLocaleString() },
+              { label: 'コメント',      value: (snapshot.comments ?? 0).toLocaleString() },
+              { label: 'シェア',        value: (snapshot.shares ?? 0).toLocaleString() },
+              { label: 'フォロワー増加', value: (snapshot.new_followers ?? 0).toLocaleString() },
+              { label: '販売数',        value: (snapshot.items_sold ?? 0).toLocaleString() },
+            ].map(({ label, value }) => (
+              <div key={label} className="bg-slate-50 rounded-lg p-3">
+                <p className="text-xs text-slate-400 mb-0.5">{label}</p>
+                <p className="text-lg font-bold text-slate-900">{value}</p>
+              </div>
+            ))}
+          </div>
+          <div className="grid grid-cols-3 gap-3">
+            {[
+              { label: 'CTR',          value: `${snapshot.ctr ?? 0}%` },
+              { label: '完了率',       value: `${snapshot.completion_rate ?? 0}%` },
+              { label: 'GMV',          value: `¥${Number(snapshot.gmv ?? 0).toLocaleString()}` },
+              { label: 'Direct GMV',   value: `¥${Number(snapshot.direct_gmv ?? 0).toLocaleString()}` },
+            ].map(({ label, value }) => (
+              <div key={label} className="bg-indigo-50 rounded-lg p-3">
+                <p className="text-xs text-indigo-400 mb-0.5">{label}</p>
+                <p className="text-lg font-bold text-indigo-700">{value}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* 指標 */}
       <div className="bg-white rounded-xl border border-slate-200 p-6 mb-5">
-        <h2 className="font-semibold text-slate-800 mb-5">指標</h2>
+        <h2 className="font-semibold text-slate-800 mb-5">指標（手動入力）</h2>
         <div className="grid grid-cols-2 gap-6">
           <div>
             <p className="text-xs font-semibold text-indigo-500 uppercase tracking-wider mb-3">初動 72h</p>

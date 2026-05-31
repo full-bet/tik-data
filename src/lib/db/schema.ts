@@ -15,9 +15,10 @@ export const accounts = pgTable('accounts', {
 })
 
 export const items = pgTable('items', {
-  id:         uuid('id').primaryKey().defaultRandom(),
-  user_id:    uuid('user_id').notNull(),
-  account_id: uuid('account_id'),
+  id:              uuid('id').primaryKey().defaultRandom(),
+  user_id:         uuid('user_id').notNull(),
+  account_id:      uuid('account_id'),
+  tiktok_video_id: text('tiktok_video_id'),
 
   // 動画
   video_title: text('video_title').notNull(),
@@ -61,6 +62,7 @@ export const analyticsSnapshots = pgTable('analytics_snapshots', {
   id:               uuid('id').primaryKey().defaultRandom(),
   user_id:          uuid('user_id').notNull(),
   import_id:        uuid('import_id').notNull(),
+  item_id:          uuid('item_id'),
   video_title:      text('video_title'),
   video_id:         text('video_id'),
   post_date:        text('post_date'),
