@@ -70,7 +70,7 @@ export default async function AnalyticsPage() {
   ]
 
   return (
-    <div className="p-8 space-y-6">
+    <div className="p-4 sm:p-8 space-y-6">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-slate-900">アナリティクス</h1>
@@ -134,6 +134,7 @@ export default async function AnalyticsPage() {
             <div className="bg-white rounded-xl border border-slate-200 p-6">
               <h2 className="font-semibold text-slate-700 mb-4">再生数ランキング（最新インポート）</h2>
               <RankingChart data={rankingData} />
+              <div className="overflow-x-auto">
               <table className="w-full text-xs mt-4">
                 <thead>
                   <tr className="text-left text-slate-400 border-b border-slate-100">
@@ -156,6 +157,7 @@ export default async function AnalyticsPage() {
                   ))}
                 </tbody>
               </table>
+              </div>
             </div>
           )}
 

@@ -21,7 +21,7 @@ async function createScript(formData: FormData) {
 
 export default function NewScriptPage() {
   return (
-    <div className="p-8 max-w-2xl">
+    <div className="p-4 sm:p-8 max-w-2xl">
       <div className="mb-8">
         <Link href="/scripts" className="text-slate-400 hover:text-slate-600 text-sm">
           ← 台本一覧
