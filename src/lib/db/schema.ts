@@ -1,4 +1,4 @@
-import { pgTable, uuid, text, timestamp, bigint, integer, numeric } from 'drizzle-orm/pg-core'
+import { pgTable, uuid, text, timestamp, bigint, integer, numeric, index } from 'drizzle-orm/pg-core'
 
 export const accounts = pgTable('accounts', {
   id:                  uuid('id').primaryKey().defaultRandom(),
@@ -84,3 +84,16 @@ export const analyticsSnapshots = pgTable('analytics_snapshots', {
   completion_rate:  numeric('completion_rate').default('0'),
   created_at:       timestamp('created_at', { withTimezone: true }).defaultNow(),
 })
+
+export const competitorVideos = pgTable('competitor_videos', {
+  id:             uuid('id').primaryKey().defaultRandom(),
+  user_id:        uuid('user_id').notNull(),
+  tiktok_url:     text('tiktok_url').notNull(),
+  title:          text('title'),
+  account_name:   text('account_name'),
+  category:       text('category'),
+  script_content: text('script_content'),
+  memo:           text('memo'),
+  created_at:     timestamp('created_at', { withTimezone: true }).defaultNow(),
+  updated_at:     timestamp('updated_at', { withTimezone: true }).defaultNow(),
+}, (t) => [index('competitor_videos_user_id_idx').on(t.user_id)])
