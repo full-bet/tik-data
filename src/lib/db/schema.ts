@@ -1,4 +1,4 @@
-import { pgTable, uuid, text, timestamp, bigint, integer, numeric, index } from 'drizzle-orm/pg-core'
+import { pgTable, uuid, text, timestamp, bigint, integer, numeric } from 'drizzle-orm/pg-core'
 
 export const accounts = pgTable('accounts', {
   id:                  uuid('id').primaryKey().defaultRandom(),
@@ -96,4 +96,4 @@ export const competitorVideos = pgTable('competitor_videos', {
   memo:           text('memo'),
   created_at:     timestamp('created_at', { withTimezone: true }).defaultNow(),
   updated_at:     timestamp('updated_at', { withTimezone: true }).defaultNow(),
-}, (t) => [index('competitor_videos_user_id_idx').on(t.user_id)])
+})
