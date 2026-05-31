@@ -11,7 +11,7 @@ export default async function ItemsPage() {
     .order('posted_at', { ascending: false, nullsFirst: false })
 
   return (
-    <div className="p-8">
+    <div className="p-4 sm:p-8">
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-2xl font-bold text-slate-900">投稿管理</h1>

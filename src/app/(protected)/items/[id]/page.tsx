@@ -21,7 +21,7 @@ export default async function ItemDetailPage({ params }: { params: Promise<{ id:
     .single()
 
   return (
-    <div className="p-8 max-w-3xl">
+    <div className="p-4 sm:p-8 max-w-3xl">
       <div className="mb-6">
         <Link href="/items" className="text-slate-400 hover:text-slate-600 text-sm">
           ← 投稿管理
@@ -33,11 +33,11 @@ export default async function ItemDetailPage({ params }: { params: Promise<{ id:
         <h2 className="font-semibold text-slate-800 mb-5">動画情報</h2>
         <div className="space-y-4">
           <SaveField itemId={id} field="video_title" label="動画タイトル" defaultValue={item.video_title} />
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <SaveField itemId={id} field="video_url" label="動画URL" defaultValue={item.video_url ?? ''} placeholder="https://www.tiktok.com/@user/video/..." />
             <SaveField itemId={id} field="posted_at" label="投稿日時" defaultValue={item.posted_at ? item.posted_at.slice(0, 16) : ''} type="datetime-local" />
           </div>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <SaveField itemId={id} field="category" label="カテゴリ" defaultValue={item.category ?? ''} placeholder="例: 商品紹介" />
             <SaveField itemId={id} field="hook" label="冒頭フック" defaultValue={item.hook ?? ''} placeholder="例: 〇〇な人は見て" />
           </div>
@@ -66,7 +66,7 @@ export default async function ItemDetailPage({ params }: { params: Promise<{ id:
             <h2 className="font-semibold text-slate-800">アナリティクス（最新インポート）</h2>
             <span className="text-xs text-slate-400">尺: {snapshot.duration ?? '—'}</span>
           </div>
-          <div className="grid grid-cols-3 gap-3 mb-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-4">
             {[
               { label: '再生数',        value: (snapshot.views ?? 0).toLocaleString() },
               { label: 'いいね',        value: (snapshot.likes ?? 0).toLocaleString() },
@@ -81,7 +81,7 @@ export default async function ItemDetailPage({ params }: { params: Promise<{ id:
               </div>
             ))}
           </div>
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
             {[
               { label: 'CTR',          value: `${snapshot.ctr ?? 0}%` },
               { label: '完了率',       value: `${snapshot.completion_rate ?? 0}%` },
@@ -100,7 +100,7 @@ export default async function ItemDetailPage({ params }: { params: Promise<{ id:
       {/* 指標 */}
       <div className="bg-white rounded-xl border border-slate-200 p-6 mb-5">
         <h2 className="font-semibold text-slate-800 mb-5">指標（手動入力）</h2>
-        <div className="grid grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <div>
             <p className="text-xs font-semibold text-indigo-500 uppercase tracking-wider mb-3">初動 72h</p>
             <div className="space-y-3">
