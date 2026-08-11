@@ -3,8 +3,6 @@ import { createClient } from '@/lib/supabase/server'
 
 export async function POST(req: NextRequest) {
   const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
-  if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
   const { url } = await req.json() as { url: string }
   if (!url) return NextResponse.json({ error: 'URL required' }, { status: 400 })
@@ -33,7 +31,6 @@ export async function POST(req: NextRequest) {
   const { data: competitor, error } = await supabase
     .from('competitors')
     .insert({
-      user_id:       user.id,
       url,
       video_title:   title,
       creator_name:  creator,

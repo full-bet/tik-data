@@ -6,11 +6,8 @@ import { redirect } from 'next/navigation'
 
 export async function createItem() {
   const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
-  if (!user) return
 
   const { data } = await supabase.from('items').insert({
-    user_id: user.id,
     video_title: '新規アイテム',
   }).select().single()
 

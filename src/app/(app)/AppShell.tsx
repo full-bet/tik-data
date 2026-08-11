@@ -2,17 +2,17 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { signOut } from '@/lib/actions'
 
 const navItems = [
   { href: '/items', label: '投稿管理', icon: '📋' },
+  { href: '/scripts', label: '台本', icon: '📝' },
   { href: '/analytics', label: 'アナリティクス', icon: '📊' },
   { href: '/competitors', label: '競合分析', icon: '🔍' },
-  { href: '/accounts', label: 'TikTokアカウント', icon: '🔗' },
+  { href: '/accounts', label: 'アカウント', icon: '🔗' },
   { href: '/docs', label: 'ドキュメント', icon: '📄' },
 ]
 
-export function AppShell({ email, children }: { email: string; children: React.ReactNode }) {
+export function AppShell({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false)
 
   return (
@@ -33,8 +33,7 @@ export function AppShell({ email, children }: { email: string; children: React.R
       >
         <div className="px-6 py-5 border-b border-slate-800 flex items-center justify-between">
           <div className="min-w-0">
-            <p className="text-white font-bold text-base">TikTok Analytics</p>
-            <p className="text-slate-400 text-xs mt-0.5 truncate">{email}</p>
+            <p className="text-white font-bold text-base">素材・台本DB</p>
           </div>
           <button
             className="lg:hidden ml-2 shrink-0 text-slate-400 hover:text-white p-1 rounded"
@@ -61,16 +60,6 @@ export function AppShell({ email, children }: { email: string; children: React.R
           ))}
         </nav>
 
-        <div className="px-3 py-4 border-t border-slate-800">
-          <form action={signOut}>
-            <button
-              type="submit"
-              className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 text-sm transition-colors text-left"
-            >
-              <span>🚪</span>ログアウト
-            </button>
-          </form>
-        </div>
       </aside>
 
       {/* Main wrapper */}
@@ -88,7 +77,7 @@ export function AppShell({ email, children }: { email: string; children: React.R
               <line x1="3" y1="15" x2="17" y2="15" />
             </svg>
           </button>
-          <p className="text-white font-bold text-sm">TikTok Analytics</p>
+          <p className="text-white font-bold text-sm">素材・台本DB</p>
         </header>
 
         <main className="flex-1 overflow-auto">

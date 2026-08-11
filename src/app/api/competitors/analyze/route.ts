@@ -6,8 +6,6 @@ const anthropic = new Anthropic()
 
 export async function POST(req: NextRequest) {
   const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
-  if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
   const { competitor_id } = await req.json() as { competitor_id: string }
 
@@ -15,7 +13,6 @@ export async function POST(req: NextRequest) {
     .from('competitors')
     .select('transcript, video_title, creator_name')
     .eq('id', competitor_id)
-    .eq('user_id', user.id)
     .single()
 
   if (!comp?.transcript) {

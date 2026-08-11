@@ -5,11 +5,8 @@ import Link from 'next/link'
 async function createScript(formData: FormData) {
   'use server'
   const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
-  if (!user) return
 
   const { data } = await supabase.from('scripts').insert({
-    user_id: user.id,
     title: formData.get('title') as string,
     content: (formData.get('content') as string) || null,
     category: (formData.get('category') as string) || null,

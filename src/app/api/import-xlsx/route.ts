@@ -4,8 +4,6 @@ import { parseXlsxBuffer } from '@/lib/xlsx-parser'
 
 export async function POST(req: NextRequest) {
   const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
-  if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
   const formData = await req.formData()
   const file = formData.get('file') as File | null
@@ -16,7 +14,7 @@ export async function POST(req: NextRequest) {
   // Create import record
   const { data: rec, error: recErr } = await supabase
     .from('analytics_imports')
-    .insert({ user_id: user.id, filename: file.name, status: 'processing' })
+    .insert({ filename: file.name, status: 'processing' })
     .select()
     .single()
   if (recErr || !rec) return NextResponse.json({ error: 'DB error' }, { status: 500 })
@@ -35,7 +33,7 @@ export async function POST(req: NextRequest) {
     const videoIds = rows.map(r => r.video_id).filter(Boolean) as string[]
     const { data: existingItems } = videoIds.length
       ? await supabase.from('items').select('id,tiktok_video_id')
-          .eq('user_id', user.id).in('tiktok_video_id', videoIds)
+          .in('tiktok_video_id', videoIds)
       : { data: [] }
 
     const existingMap = new Map((existingItems ?? []).map(i => [i.tiktok_video_id, i.id]))
@@ -50,7 +48,6 @@ export async function POST(req: NextRequest) {
         // 新規作成
         const postedAt = row.post_date ? parsePostDate(row.post_date) : null
         const { data: newItem } = await supabase.from('items').insert({
-          user_id:         user.id,
           tiktok_video_id: row.video_id ?? null,
           video_title:     row.video_title ?? '無題',
           posted_at:       postedAt,
@@ -78,7 +75,6 @@ export async function POST(req: NextRequest) {
 
     // ---- snapshots 挿入 ----
     const snapshots = rowsWithItemId.map(r => ({
-      user_id:         user.id,
       import_id:       rec.id,
       item_id:         r.item_id,
       video_title:     r.video_title      ?? null,

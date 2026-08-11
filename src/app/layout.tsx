@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "TikTok Analytics",
-  description: "台本ごとの投稿パフォーマンス分析ツール",
+  title: "素材・台本DB",
+  description: "自社の動画素材・台本・案件を一括管理する社内DB",
 };
 
 export default function RootLayout({

@@ -6,8 +6,6 @@ const anthropic = new Anthropic()
 
 export async function POST(req: NextRequest) {
   const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
-  if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
   const { import_id } = await req.json() as { import_id: string }
 
