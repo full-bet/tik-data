@@ -5,7 +5,6 @@ import { NextResponse } from 'next/server'
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
   const code = searchParams.get('code')
-  const state = searchParams.get('state')
   const appUrl = process.env.NEXT_PUBLIC_APP_URL!
 
   if (!code) {
@@ -14,8 +13,6 @@ export async function GET(request: Request) {
 
   try {
     const supabase = await createClient()
-    const { data: { user } } = await supabase.auth.getUser()
-    if (!user) return NextResponse.redirect(`${appUrl}/login`)
 
     const tokenData = await exchangeCodeForToken(code)
     const userInfo = await getUserInfo(tokenData.access_token)
@@ -23,7 +20,6 @@ export async function GET(request: Request) {
     const expiresAt = new Date(Date.now() + tokenData.expires_in * 1000).toISOString()
 
     await supabase.from('accounts').upsert({
-      user_id: user.id,
       tiktok_open_id: userInfo.open_id,
       tiktok_username: userInfo.username,
       tiktok_display_name: userInfo.display_name,

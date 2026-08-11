@@ -6,7 +6,7 @@ export default async function ScriptsPage() {
 
   const { data: scripts } = await supabase
     .from('scripts')
-    .select('*, posts(count)')
+    .select('*, items(count)')
     .order('created_at', { ascending: false })
 
   return (
@@ -56,7 +56,7 @@ export default async function ScriptsPage() {
               </div>
               <div className="ml-4 text-right shrink-0">
                 <p className="text-2xl font-bold text-slate-900">
-                  {(script.posts as unknown as { count: number }[])?.[0]?.count ?? 0}
+                  {(script.items as unknown as { count: number }[])?.[0]?.count ?? 0}
                 </p>
                 <p className="text-xs text-slate-400">投稿</p>
               </div>

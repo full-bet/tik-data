@@ -2,6 +2,7 @@ import { createClient } from '@/lib/supabase/server'
 import { redirect, notFound } from 'next/navigation'
 import Link from 'next/link'
 import { extractVideoId } from '@/lib/tiktok/api'
+import { DeleteScriptButton } from './DeleteScriptButton'
 
 async function updateScript(formData: FormData) {
   'use server'
@@ -25,11 +26,9 @@ async function deleteScript(formData: FormData) {
   redirect('/scripts')
 }
 
-async function linkPost(formData: FormData) {
+async function linkItem(formData: FormData) {
   'use server'
   const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
-  if (!user) return
 
   const scriptId = formData.get('script_id') as string
   const videoInput = formData.get('video_input') as string
@@ -39,13 +38,28 @@ async function linkPost(formData: FormData) {
   const videoId = extractVideoId(videoInput)
   if (!videoId) redirect(`/scripts/${scriptId}?error=invalid_video_id`)
 
-  await supabase.from('posts').insert({
-    user_id: user.id,
-    script_id: scriptId,
-    account_id: accountId,
-    tiktok_video_id: videoId,
-    posted_at: postedAt || null,
-  })
+  const { data: existing } = await supabase
+    .from('items')
+    .select('id')
+    .eq('tiktok_video_id', videoId)
+    .maybeSingle()
+
+  if (existing) {
+    await supabase.from('items').update({
+      script_id: scriptId,
+      account_id: accountId,
+      posted_at: postedAt || null,
+      updated_at: new Date().toISOString(),
+    }).eq('id', existing.id)
+  } else {
+    await supabase.from('items').insert({
+      script_id: scriptId,
+      account_id: accountId,
+      tiktok_video_id: videoId,
+      video_title: `動画 ${videoId}`,
+      posted_at: postedAt || null,
+    })
+  }
 
   redirect(`/scripts/${scriptId}?linked=1`)
 }
@@ -59,10 +73,10 @@ export default async function ScriptDetailPage({ params }: { params: Promise<{ i
   const { id } = await params
   const supabase = await createClient()
 
-  const [{ data: script }, { data: posts }, { data: accounts }] = await Promise.all([
+  const [{ data: script }, { data: items }, { data: accounts }] = await Promise.all([
     supabase.from('scripts').select('*').eq('id', id).single(),
-    supabase.from('posts')
-      .select('*, post_metrics(*), accounts(tiktok_username, tiktok_display_name)')
+    supabase.from('items')
+      .select('id, tiktok_video_id, posted_at, views, likes, initial_views, initial_likes, accounts(tiktok_username, tiktok_display_name)')
       .eq('script_id', id)
       .order('posted_at', { ascending: false }),
     supabase.from('accounts').select('id, tiktok_username, tiktok_display_name'),
@@ -128,13 +142,7 @@ export default async function ScriptDetailPage({ params }: { params: Promise<{ i
             </button>
             <form action={deleteScript}>
               <input type="hidden" name="id" value={id} />
-              <button
-                type="submit"
-                className="px-4 py-2 text-red-500 hover:text-red-700 text-sm"
-                onClick={e => !confirm('この台本を削除しますか？') && e.preventDefault()}
-              >
-                削除
-              </button>
+              <DeleteScriptButton />
             </form>
           </div>
         </form>
@@ -144,11 +152,11 @@ export default async function ScriptDetailPage({ params }: { params: Promise<{ i
       {accounts && accounts.length > 0 && (
         <div className="bg-white rounded-xl border border-slate-200 p-6 mb-6">
           <h2 className="font-semibold text-slate-800 mb-4">動画を紐付ける</h2>
-          <form action={linkPost} className="space-y-4">
+          <form action={linkItem} className="space-y-4">
             <input type="hidden" name="script_id" value={id} />
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">TikTokアカウント</label>
+                <label className="block text-sm font-medium text-slate-700 mb-1">アカウント</label>
                 <select
                   name="account_id"
                   required
@@ -194,10 +202,10 @@ export default async function ScriptDetailPage({ params }: { params: Promise<{ i
       {/* 紐付き投稿一覧 */}
       <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
         <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
-          <h2 className="font-semibold text-slate-800">紐付き投稿 ({posts?.length ?? 0}件)</h2>
+          <h2 className="font-semibold text-slate-800">紐付き投稿 ({items?.length ?? 0}件)</h2>
         </div>
 
-        {!posts || posts.length === 0 ? (
+        {!items || items.length === 0 ? (
           <div className="p-12 text-center">
             <p className="text-slate-400 text-sm">まだ動画が紐付けられていません</p>
           </div>
@@ -215,40 +223,27 @@ export default async function ScriptDetailPage({ params }: { params: Promise<{ i
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100">
-                {posts.map(post => {
-                  const sorted = [...(post.post_metrics ?? [])].sort(
-                    (a, b) => new Date(a.recorded_at).getTime() - new Date(b.recorded_at).getTime()
-                  )
-                  const deadline = post.posted_at
-                    ? new Date(new Date(post.posted_at).getTime() + 72 * 60 * 60 * 1000)
-                    : null
-                  const initial = deadline
-                    ? sorted.filter(m => new Date(m.recorded_at) <= deadline).pop()
-                    : null
-                  const latest = sorted[sorted.length - 1]
-
-                  return (
-                    <tr key={post.id} className="hover:bg-slate-50">
-                      <td className="px-6 py-4">
-                        <a
-                          href={`https://www.tiktok.com/@_/video/${post.tiktok_video_id}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-indigo-600 hover:underline font-mono text-xs"
-                        >
-                          {post.tiktok_video_id}
-                        </a>
-                      </td>
-                      <td className="px-4 py-4 text-slate-500">
-                        {post.posted_at ? new Date(post.posted_at).toLocaleDateString('ja-JP') : '—'}
-                      </td>
-                      <td className="px-4 py-4 text-right text-slate-700">{initial ? fmt(initial.views) : '—'}</td>
-                      <td className="px-4 py-4 text-right text-slate-700">{initial ? fmt(initial.likes) : '—'}</td>
-                      <td className="px-4 py-4 text-right font-medium text-slate-900">{latest ? fmt(latest.views) : '—'}</td>
-                      <td className="px-4 py-4 text-right text-slate-700">{latest ? fmt(latest.likes) : '—'}</td>
-                    </tr>
-                  )
-                })}
+                {items.map(item => (
+                  <tr key={item.id} className="hover:bg-slate-50">
+                    <td className="px-6 py-4">
+                      <a
+                        href={`https://www.tiktok.com/@_/video/${item.tiktok_video_id}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-indigo-600 hover:underline font-mono text-xs"
+                      >
+                        {item.tiktok_video_id}
+                      </a>
+                    </td>
+                    <td className="px-4 py-4 text-slate-500">
+                      {item.posted_at ? new Date(item.posted_at).toLocaleDateString('ja-JP') : '—'}
+                    </td>
+                    <td className="px-4 py-4 text-right text-slate-700">{fmt(item.initial_views ?? 0)}</td>
+                    <td className="px-4 py-4 text-right text-slate-700">{fmt(item.initial_likes ?? 0)}</td>
+                    <td className="px-4 py-4 text-right font-medium text-slate-900">{fmt(item.views ?? 0)}</td>
+                    <td className="px-4 py-4 text-right text-slate-700">{fmt(item.likes ?? 0)}</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
