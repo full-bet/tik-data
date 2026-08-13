@@ -6,10 +6,14 @@ import Link from 'next/link'
 const navItems = [
   { href: '/items', label: '投稿管理', icon: '📋' },
   { href: '/scripts', label: '台本', icon: '📝' },
+  { href: '/tests', label: 'テスト', icon: '🧪' },
+  { href: '/casts', label: 'キャスト', icon: '🧑' },
+  { href: '/deals', label: '商材', icon: '💼' },
+  { href: '/materials', label: '素材', icon: '🎞️' },
+  { href: '/devices', label: '端末', icon: '📱' },
   { href: '/analytics', label: 'アナリティクス', icon: '📊' },
   { href: '/competitors', label: '競合分析', icon: '🔍' },
   { href: '/accounts', label: 'アカウント', icon: '🔗' },
-  { href: '/docs', label: 'ドキュメント', icon: '📄' },
 ]
 
 export function AppShell({ children }: { children: React.ReactNode }) {

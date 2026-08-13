@@ -12,7 +12,7 @@ export const members = pgTable('members', {
   updated_at: timestamp('updated_at', { withTimezone: true }).defaultNow(),
 })
 
-// role: 'cast' | 'editor' | 'operator' | 'broker' | 'other'（1人が複数役割を持てる）
+// role: 'cast' | 'editor' | 'operator' | 'broker' | 'shooter' | 'reviewer' | 'other'（1人が複数役割を持てる）
 export const memberRoles = pgTable('member_roles', {
   id:        uuid('id').primaryKey().defaultRandom(),
   member_id: uuid('member_id').notNull().references(() => members.id, { onDelete: 'cascade' }),
@@ -59,6 +59,10 @@ export const deals = pgTable('deals', {
   name:       text('name').notNull(),
   unit_price: numeric('unit_price'),
   notes:      text('notes'),
+
+  characteristics:     text('characteristics'),     // 商材の特徴
+  selection_rationale: text('selection_rationale'), // この商材でテストを行う選定理由
+
   created_at: timestamp('created_at', { withTimezone: true }).defaultNow(),
   updated_at: timestamp('updated_at', { withTimezone: true }).defaultNow(),
 })
@@ -229,6 +233,62 @@ export const scripts = pgTable('scripts', {
 })
 
 // =========================================================================
+// テスト（クリエイティブ施策。1本の動画に関わる全ての情報を書き留める単位）
+// =========================================================================
+
+export const tests = pgTable('tests', {
+  id:      uuid('id').primaryKey().defaultRandom(),
+  deal_id: uuid('deal_id').notNull().references(() => deals.id), // どの商材のテストか
+  name:    text('name').notNull(), // 例:「test-1」
+
+  what_how:            text('what_how'),            // このtestでやること - What & How
+  account_persona:     text('account_persona'),     // 対象アカウント種別（例:「エリートチー牛アカウント」）
+  account_id:          uuid('account_id').references(() => accounts.id, { onDelete: 'set null' }), // 投稿先アカウントが確定したら
+  win_condition:       text('win_condition'),        // 勝利条件
+  premise:             text('premise'),              // 前提
+  rationale:           text('rationale'),             // このtestをやると決めた背景 - Why
+  completion_condition: text('completion_condition'), // 完了条件
+
+  // スケジュール
+  material_ready_at:          date('material_ready_at'),           // 素材準備完了
+  script_review_requested_at: date('script_review_requested_at'),  // 台本レビュー依頼完了
+  edit_completed_at:          date('edit_completed_at'),           // 編集完了
+  video_review_requested_at:  date('video_review_requested_at'),   // 動画レビュー依頼完了
+  posted_at:                  date('posted_at'),                   // 投稿完了
+
+  competitor_id: uuid('competitor_id').references(() => competitors.id, { onDelete: 'set null' }), // 参考にしたベンチマーク動画
+  script_id:     uuid('script_id').references(() => scripts.id, { onDelete: 'set null' }),          // 作成した台本
+  item_id:       uuid('item_id').references(() => items.id, { onDelete: 'set null' }),              // 実際に投稿されたコンテンツ
+
+  editor_member_id:        uuid('editor_member_id').references(() => members.id, { onDelete: 'set null' }), // 編集者
+  edit_request_doc_url:    text('edit_request_doc_url'),    // 編集依頼書
+  shooter_member_id:       uuid('shooter_member_id').references(() => members.id, { onDelete: 'set null' }), // 撮影者
+  shooting_request_doc_url: text('shooting_request_doc_url'), // 撮影依頼書
+  existing_material_drive_url: text('existing_material_drive_url'), // 既にある素材のdrive
+
+  reviewer_member_id:  uuid('reviewer_member_id').references(() => members.id, { onDelete: 'set null' }), // レビュアー
+  review_questions:    text('review_questions'),     // 質問・不安なところ
+  review_focus_points: text('review_focus_points'),  // レビューしてほしい部分・レビュー時の注意点
+  reviewer_feedback:   text('reviewer_feedback'),    // レビュアーからの総評
+
+  caption: text('caption'), // キャプションなど
+  notes:   text('notes'),   // その他自由記述
+
+  created_at: timestamp('created_at', { withTimezone: true }).defaultNow(),
+  updated_at: timestamp('updated_at', { withTimezone: true }).defaultNow(),
+})
+
+// コメント方針（投稿直後に社内メンバーが行う仕込みコメント）
+export const testSeedComments = pgTable('test_seed_comments', {
+  id:           uuid('id').primaryKey().defaultRandom(),
+  test_id:      uuid('test_id').notNull().references(() => tests.id, { onDelete: 'cascade' }),
+  member_id:    uuid('member_id').references(() => members.id, { onDelete: 'set null' }), // 未定の場合はnull（コメント候補）
+  comment_text: text('comment_text').notNull(),
+  is_candidate: boolean('is_candidate').default(false), // 確定コメントではなく候補の場合true
+  created_at:   timestamp('created_at', { withTimezone: true }).defaultNow(),
+})
+
+// =========================================================================
 // 使用AIツール（コンテンツ・台本それぞれとN:N）
 // =========================================================================
 
@@ -274,13 +334,15 @@ export const taggables = pgTable('taggables', {
 
 export const competitors = pgTable('competitors', {
   id:           uuid('id').primaryKey().defaultRandom(),
+  deal_id:      uuid('deal_id').references(() => deals.id, { onDelete: 'set null' }), // どの商材のベンチマークか
   url:          text('url').notNull(),
   platform:     text('platform').default('tiktok'),
   video_title:  text('video_title'),
   creator_name: text('creator_name'),
   posted_at:    timestamp('posted_at', { withTimezone: true }),
   thumbnail_url: text('thumbnail_url'),
-  transcript:   text('transcript'),      // Whisper文字起こし
+  appeal_angle: text('appeal_angle'),    // 訴求内容（例:「身長伸ばす成分訴求」）
+  transcript:   text('transcript'),      // Whisper文字起こし（参考動画の文字起こし）
   hook:         text('hook'),            // AI抽出: 冒頭フック
   structure:    text('structure'),       // AI抽出: 構成（JSON文字列）
   cta:          text('cta'),             // AI抽出: CTA
@@ -288,6 +350,32 @@ export const competitors = pgTable('competitors', {
   notes:        text('notes'),           // 手動メモ
   created_at:   timestamp('created_at', { withTimezone: true }).defaultNow(),
   updated_at:   timestamp('updated_at', { withTimezone: true }).defaultNow(),
+})
+
+// 参考動画の分析インサイト（売れている/伸びている理由・改善点・類似動画との比較）
+// kind: 'success_reason' | 'improvement_point' | 'comparison_note'
+export const competitorInsights = pgTable('competitor_insights', {
+  id:           uuid('id').primaryKey().defaultRandom(),
+  competitor_id: uuid('competitor_id').notNull().references(() => competitors.id, { onDelete: 'cascade' }),
+  kind:         text('kind').notNull(),
+  order_index:  integer('order_index').default(0),
+  title:        text('title'),
+  body:         text('body').notNull(),
+  created_at:   timestamp('created_at', { withTimezone: true }).defaultNow(),
+})
+
+// コマ割り（カット割り）。参考動画・作成する動画のどちらにも使う汎用カットリスト
+// （competitor_id / test_id のどちらか一方を設定する）
+// source_type: 'existing' | 'new_shoot' | 'stock' | 'rednote' | 'image_citation' | 'edit_generated' | 'reused' | 'needs_talent' 等
+export const storyboardCuts = pgTable('storyboard_cuts', {
+  id:            uuid('id').primaryKey().defaultRandom(),
+  competitor_id: uuid('competitor_id').references(() => competitors.id, { onDelete: 'cascade' }),
+  test_id:       uuid('test_id').references(() => tests.id, { onDelete: 'cascade' }),
+  cut_order:     integer('cut_order').notNull(),
+  description:   text('description').notNull(),
+  source_type:   text('source_type'),
+  material_id:   uuid('material_id').references(() => materials.id, { onDelete: 'set null' }),
+  created_at:    timestamp('created_at', { withTimezone: true }).defaultNow(),
 })
 
 // =========================================================================
