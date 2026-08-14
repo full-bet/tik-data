@@ -1,15 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
-
-const ROLE_LABELS: Record<string, string> = {
-  cast: 'キャスト',
-  editor: '編集者',
-  operator: '運用者',
-  broker: '仲介者',
-  shooter: '撮影者',
-  reviewer: 'レビュアー',
-  other: 'その他',
-}
+import { ROLE_LABELS } from '@/lib/members'
 
 export default async function MembersPage() {
   const supabase = await createClient()
@@ -56,7 +47,11 @@ export default async function MembersPage() {
       ) : (
         <div className="grid gap-3">
           {rows.map(m => (
-            <div key={m.id} className="bg-neutral-900 rounded-xl border border-neutral-800 p-5">
+            <Link
+              key={m.id}
+              href={`/members/${m.id}`}
+              className="block bg-neutral-900 rounded-xl border border-neutral-800 p-5 hover:border-indigo-500/40 hover:shadow-sm transition-all"
+            >
               <div className="flex items-start justify-between">
                 <p className="font-semibold text-white">{m.name}</p>
                 <div className="flex gap-1.5 flex-wrap justify-end">
@@ -77,7 +72,7 @@ export default async function MembersPage() {
                 </div>
               </div>
               {m.memo && <p className="text-neutral-400 text-sm mt-3">{m.memo}</p>}
-            </div>
+            </Link>
           ))}
         </div>
       )}

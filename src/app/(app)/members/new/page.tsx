@@ -1,16 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
-
-const ROLE_OPTIONS = [
-  { value: 'cast', label: 'キャスト' },
-  { value: 'editor', label: '編集者' },
-  { value: 'operator', label: '運用者' },
-  { value: 'broker', label: '仲介者' },
-  { value: 'shooter', label: '撮影者' },
-  { value: 'reviewer', label: 'レビュアー' },
-  { value: 'other', label: 'その他' },
-]
+import { ROLE_OPTIONS } from '@/lib/members'
 
 async function createMember(formData: FormData) {
   'use server'
@@ -76,7 +67,7 @@ export default function NewMemberPage() {
             ))}
           </div>
           <p className="text-neutral-500 text-xs mt-2">
-            「キャスト」を選ぶと、キャスト一覧にもプロフィール未入力の状態で表示されます（年齢・NG事項などの詳細項目は別途キャストとして登録してください）
+            「キャスト」を選ぶと、キャスト一覧にもプロフィール未入力の状態で表示されます（年齢・NG事項などの詳細項目は追加後にメンバー詳細ページから入力できます）
           </p>
         </div>
 
