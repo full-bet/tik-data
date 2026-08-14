@@ -7,6 +7,7 @@ const navItems = [
   { href: '/items', label: '投稿管理', icon: '📋' },
   { href: '/scripts', label: '台本', icon: '📝' },
   { href: '/tests', label: 'テスト', icon: '🧪' },
+  { href: '/members', label: 'メンバー', icon: '👥' },
   { href: '/casts', label: 'キャスト', icon: '🧑' },
   { href: '/deals', label: '商材', icon: '💼' },
   { href: '/materials', label: '素材', icon: '🎞️' },
@@ -37,7 +38,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       >
         <div className="px-6 py-5 border-b border-neutral-800 flex items-center justify-between">
           <div className="min-w-0">
-            <p className="text-white font-bold text-base">素材・台本DB</p>
+            <p className="text-white font-bold text-base">tik-data</p>
           </div>
           <button
             className="lg:hidden ml-2 shrink-0 text-neutral-500 hover:text-white p-1 rounded"
@@ -81,7 +82,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               <line x1="3" y1="15" x2="17" y2="15" />
             </svg>
           </button>
-          <p className="text-white font-bold text-sm">素材・台本DB</p>
+          <p className="text-white font-bold text-sm">tik-data</p>
         </header>
 
         <main className="flex-1 overflow-auto">
