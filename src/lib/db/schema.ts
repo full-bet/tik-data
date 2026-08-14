@@ -47,14 +47,26 @@ export const castPhotos = pgTable('cast_photos', {
 // =========================================================================
 
 export const clients = pgTable('clients', {
-  id:             uuid('id').primaryKey().defaultRandom(),
-  name:           text('name').notNull(),
-  contact_name:   text('contact_name'),   // 担当者名
-  contact_method: text('contact_method'), // 連絡方法・連絡先
-  notes:          text('notes'),
-  created_at:     timestamp('created_at', { withTimezone: true }).defaultNow(),
-  updated_at:     timestamp('updated_at', { withTimezone: true }).defaultNow(),
+  id:           uuid('id').primaryKey().defaultRandom(),
+  name:         text('name').notNull(),
+  contact_name: text('contact_name'), // 担当者名
+  notes:        text('notes'),
+  created_at:   timestamp('created_at', { withTimezone: true }).defaultNow(),
+  updated_at:   timestamp('updated_at', { withTimezone: true }).defaultNow(),
 })
+
+// 連絡方法マスタ（例: メール、電話、Chatwork、LINEなど）
+export const contactMethods = pgTable('contact_methods', {
+  id:   uuid('id').primaryKey().defaultRandom(),
+  name: text('name').notNull().unique(),
+})
+
+// 取引先の連絡方法（複数選択可）
+export const clientContactMethods = pgTable('client_contact_methods', {
+  id:                uuid('id').primaryKey().defaultRandom(),
+  client_id:         uuid('client_id').notNull().references(() => clients.id, { onDelete: 'cascade' }),
+  contact_method_id: uuid('contact_method_id').notNull().references(() => contactMethods.id, { onDelete: 'cascade' }),
+}, (t) => [unique().on(t.client_id, t.contact_method_id)])
 
 // =========================================================================
 // 商材
