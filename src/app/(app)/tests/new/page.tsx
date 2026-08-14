@@ -52,34 +52,34 @@ export default async function NewTestPage() {
   return (
     <div className="p-4 sm:p-8 max-w-2xl">
       <div className="mb-8">
-        <Link href="/tests" className="text-slate-400 hover:text-slate-600 text-sm">
+        <Link href="/tests" className="text-neutral-500 hover:text-white text-sm">
           ← テスト一覧
         </Link>
-        <h1 className="text-2xl font-bold text-slate-900 mt-3">テストを追加</h1>
+        <h1 className="text-2xl font-bold text-white mt-3">テストを追加</h1>
       </div>
 
-      <form action={createTest} className="bg-white rounded-xl border border-slate-200 p-6 space-y-5">
+      <form action={createTest} className="bg-neutral-900 rounded-xl border border-neutral-800 p-6 space-y-5">
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">
-              テスト名 <span className="text-red-500">*</span>
+            <label className="block text-sm font-medium text-neutral-300 mb-1">
+              テスト名 <span className="text-red-400">*</span>
             </label>
             <input
               name="name"
               required
               placeholder="例: test-1"
-              className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">
-              商材 <span className="text-red-500">*</span>
+            <label className="block text-sm font-medium text-neutral-300 mb-1">
+              商材 <span className="text-red-400">*</span>
             </label>
             <select
               name="deal_id"
               required
               defaultValue=""
-              className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
             >
               <option value="" disabled>選択してください</option>
               {(deals ?? []).map(d => (
@@ -90,29 +90,29 @@ export default async function NewTestPage() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1">このtestでやること - What &amp; How</label>
+          <label className="block text-sm font-medium text-neutral-300 mb-1">このtestでやること - What &amp; How</label>
           <textarea
             name="what_how"
             rows={3}
-            className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
+            className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
           />
         </div>
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">対象アカウント種別</label>
+            <label className="block text-sm font-medium text-neutral-300 mb-1">対象アカウント種別</label>
             <input
               name="account_persona"
               placeholder="例: エリートチー牛アカウント"
-              className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">投稿先アカウント</label>
+            <label className="block text-sm font-medium text-neutral-300 mb-1">投稿先アカウント</label>
             <select
               name="account_id"
               defaultValue=""
-              className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
             >
               <option value="">未定</option>
               {(accounts ?? []).map(a => (
@@ -123,11 +123,11 @@ export default async function NewTestPage() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1">参考にするベンチマーク動画</label>
+          <label className="block text-sm font-medium text-neutral-300 mb-1">参考にするベンチマーク動画</label>
           <select
             name="competitor_id"
             defaultValue=""
-            className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
           >
             <option value="">未定</option>
             {(competitors ?? []).map(c => (
@@ -139,48 +139,48 @@ export default async function NewTestPage() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1">勝利条件</label>
+          <label className="block text-sm font-medium text-neutral-300 mb-1">勝利条件</label>
           <input
             name="win_condition"
             placeholder="例: 1CV"
-            className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1">前提</label>
+          <label className="block text-sm font-medium text-neutral-300 mb-1">前提</label>
           <textarea
             name="premise"
             rows={2}
-            className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
+            className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1">背景 - Why</label>
+          <label className="block text-sm font-medium text-neutral-300 mb-1">背景 - Why</label>
           <textarea
             name="rationale"
             rows={3}
-            className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
+            className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1">完了条件</label>
+          <label className="block text-sm font-medium text-neutral-300 mb-1">完了条件</label>
           <textarea
             name="completion_condition"
             rows={2}
-            className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
+            className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
           />
         </div>
 
         <div className="grid grid-cols-3 gap-4">
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">編集者</label>
+            <label className="block text-sm font-medium text-neutral-300 mb-1">編集者</label>
             <select
               name="editor_member_id"
               defaultValue=""
-              className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
             >
               <option value="">未定</option>
               {memberOptions.map(m => (
@@ -189,11 +189,11 @@ export default async function NewTestPage() {
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">撮影者</label>
+            <label className="block text-sm font-medium text-neutral-300 mb-1">撮影者</label>
             <select
               name="shooter_member_id"
               defaultValue=""
-              className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
             >
               <option value="">未定</option>
               {memberOptions.map(m => (
@@ -202,11 +202,11 @@ export default async function NewTestPage() {
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">レビュアー</label>
+            <label className="block text-sm font-medium text-neutral-300 mb-1">レビュアー</label>
             <select
               name="reviewer_member_id"
               defaultValue=""
-              className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
             >
               <option value="">未定</option>
               {memberOptions.map(m => (
@@ -217,20 +217,20 @@ export default async function NewTestPage() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1">キャプションなど</label>
+          <label className="block text-sm font-medium text-neutral-300 mb-1">キャプションなど</label>
           <textarea
             name="caption"
             rows={2}
-            className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
+            className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1">メモ</label>
+          <label className="block text-sm font-medium text-neutral-300 mb-1">メモ</label>
           <textarea
             name="notes"
             rows={2}
-            className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
+            className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
           />
         </div>
 
@@ -243,7 +243,7 @@ export default async function NewTestPage() {
           </button>
           <Link
             href="/tests"
-            className="px-6 py-2 border border-slate-300 text-slate-600 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors"
+            className="px-6 py-2 border border-neutral-700 text-neutral-400 rounded-lg text-sm font-medium hover:bg-white/5 transition-colors"
           >
             キャンセル
           </Link>

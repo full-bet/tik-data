@@ -52,67 +52,67 @@ export default function NewDealPage() {
   return (
     <div className="p-4 sm:p-8 max-w-2xl">
       <div className="mb-8">
-        <Link href="/deals" className="text-slate-400 hover:text-slate-600 text-sm">
+        <Link href="/deals" className="text-neutral-500 hover:text-white text-sm">
           ← 商材一覧
         </Link>
-        <h1 className="text-2xl font-bold text-slate-900 mt-3">商材を追加</h1>
+        <h1 className="text-2xl font-bold text-white mt-3">商材を追加</h1>
       </div>
 
-      <form action={createDeal} className="bg-white rounded-xl border border-slate-200 p-6 space-y-5">
+      <form action={createDeal} className="bg-neutral-900 rounded-xl border border-neutral-800 p-6 space-y-5">
         <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1">
-            商材名 <span className="text-red-500">*</span>
+          <label className="block text-sm font-medium text-neutral-300 mb-1">
+            商材名 <span className="text-red-400">*</span>
           </label>
           <input
             name="name"
             required
-            className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1">商材提供元法人</label>
+          <label className="block text-sm font-medium text-neutral-300 mb-1">商材提供元法人</label>
           <input
             name="client_name"
             placeholder="既存の法人名を入力すると自動で紐付きます"
-            className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1">単価</label>
+          <label className="block text-sm font-medium text-neutral-300 mb-1">単価</label>
           <input
             name="unit_price"
             type="number"
             step="any"
-            className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1">商材の特徴</label>
+          <label className="block text-sm font-medium text-neutral-300 mb-1">商材の特徴</label>
           <textarea
             name="characteristics"
             rows={3}
-            className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
+            className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1">選定理由</label>
+          <label className="block text-sm font-medium text-neutral-300 mb-1">選定理由</label>
           <textarea
             name="selection_rationale"
             rows={3}
-            className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
+            className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1">メモ</label>
+          <label className="block text-sm font-medium text-neutral-300 mb-1">メモ</label>
           <textarea
             name="notes"
             rows={2}
-            className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
+            className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
           />
         </div>
 
@@ -125,7 +125,7 @@ export default function NewDealPage() {
           </button>
           <Link
             href="/deals"
-            className="px-6 py-2 border border-slate-300 text-slate-600 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors"
+            className="px-6 py-2 border border-neutral-700 text-neutral-400 rounded-lg text-sm font-medium hover:bg-white/5 transition-colors"
           >
             キャンセル
           </Link>

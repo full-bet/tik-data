@@ -22,8 +22,8 @@ export default async function DealsPage() {
     <div className="p-4 sm:p-8">
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">商材</h1>
-          <p className="text-slate-500 text-sm mt-1">{rows.length}件</p>
+          <h1 className="text-2xl font-bold text-white">商材</h1>
+          <p className="text-neutral-500 text-sm mt-1">{rows.length}件</p>
         </div>
         <Link
           href="/deals/new"
@@ -34,9 +34,9 @@ export default async function DealsPage() {
       </div>
 
       {rows.length === 0 ? (
-        <div className="bg-white rounded-xl border border-slate-200 p-16 text-center">
+        <div className="bg-neutral-900 rounded-xl border border-neutral-800 p-16 text-center">
           <p className="text-4xl mb-4">💼</p>
-          <p className="text-slate-600 font-medium">商材がまだ登録されていません</p>
+          <p className="text-neutral-400 font-medium">商材がまだ登録されていません</p>
           <Link
             href="/deals/new"
             className="inline-block mt-4 px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700"
@@ -47,20 +47,20 @@ export default async function DealsPage() {
       ) : (
         <div className="grid gap-3">
           {rows.map(d => (
-            <div key={d.id} className="bg-white rounded-xl border border-slate-200 p-5">
+            <div key={d.id} className="bg-neutral-900 rounded-xl border border-neutral-800 p-5">
               <div className="flex items-start justify-between">
                 <div>
-                  <p className="font-semibold text-slate-900">{d.name}</p>
-                  <p className="text-slate-500 text-sm mt-1">{d.clients?.name ?? '提供元法人未設定'}</p>
+                  <p className="font-semibold text-white">{d.name}</p>
+                  <p className="text-neutral-500 text-sm mt-1">{d.clients?.name ?? '提供元法人未設定'}</p>
                 </div>
                 {d.unit_price && (
-                  <span className="inline-block px-2 py-0.5 bg-indigo-50 text-indigo-600 rounded text-xs font-medium shrink-0">
+                  <span className="inline-block px-2 py-0.5 bg-indigo-500/10 text-indigo-400 rounded text-xs font-medium shrink-0">
                     単価 {d.unit_price}
                   </span>
                 )}
               </div>
               {d.characteristics && (
-                <p className="text-slate-600 text-sm mt-3 line-clamp-2">{d.characteristics}</p>
+                <p className="text-neutral-400 text-sm mt-3 line-clamp-2">{d.characteristics}</p>
               )}
             </div>
           ))}

@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "素材・台本DB",
+  title: "tik-data",
   description: "自社の動画素材・台本・案件を一括管理する社内DB",
 };
 

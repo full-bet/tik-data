@@ -23,9 +23,9 @@ export default function AiSummary({ importId }: { importId: string }) {
   }
 
   return (
-    <div className="bg-white rounded-xl border border-slate-200 p-6">
+    <div className="bg-neutral-900 rounded-xl border border-neutral-800 p-6">
       <div className="flex items-center justify-between mb-4">
-        <h2 className="font-semibold text-slate-700">AI サマリー</h2>
+        <h2 className="font-semibold text-neutral-300">AI サマリー</h2>
         <button
           onClick={generate}
           disabled={loading}
@@ -35,9 +35,9 @@ export default function AiSummary({ importId }: { importId: string }) {
         </button>
       </div>
       {summary ? (
-        <p className="text-sm text-slate-700 leading-relaxed whitespace-pre-wrap">{summary}</p>
+        <p className="text-sm text-neutral-300 leading-relaxed whitespace-pre-wrap">{summary}</p>
       ) : (
-        <p className="text-sm text-slate-400">
+        <p className="text-sm text-neutral-500">
           「生成」ボタンを押すと最新インポートのデータをAIが分析します
         </p>
       )}

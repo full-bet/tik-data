@@ -57,6 +57,13 @@
       "when": 1786448704764,
       "tag": "0007_add_test_workflow_tables",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1786712238600,
+      "tag": "0008_material_tags_multiselect",
+      "breakpoints": true
     }
   ]
 }

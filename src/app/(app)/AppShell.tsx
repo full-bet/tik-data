@@ -7,6 +7,7 @@ const navItems = [
   { href: '/items', label: '投稿管理', icon: '📋' },
   { href: '/scripts', label: '台本', icon: '📝' },
   { href: '/tests', label: 'テスト', icon: '🧪' },
+  { href: '/members', label: 'メンバー', icon: '👥' },
   { href: '/casts', label: 'キャスト', icon: '🧑' },
   { href: '/deals', label: '商材', icon: '💼' },
   { href: '/materials', label: '素材', icon: '🎞️' },
@@ -20,7 +21,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false)
 
   return (
-    <div className="flex h-screen bg-slate-50 overflow-hidden">
+    <div className="flex h-screen bg-black overflow-hidden">
       {/* Mobile overlay */}
       {open && (
         <div
@@ -31,16 +32,16 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
       {/* Sidebar */}
       <aside
-        className={`fixed inset-y-0 left-0 z-30 w-60 bg-slate-900 flex flex-col transition-transform duration-200 ease-in-out lg:static lg:translate-x-0 ${
+        className={`fixed inset-y-0 left-0 z-30 w-60 bg-black flex flex-col transition-transform duration-200 ease-in-out lg:static lg:translate-x-0 ${
           open ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
-        <div className="px-6 py-5 border-b border-slate-800 flex items-center justify-between">
+        <div className="px-6 py-5 border-b border-neutral-800 flex items-center justify-between">
           <div className="min-w-0">
-            <p className="text-white font-bold text-base">素材・台本DB</p>
+            <p className="text-white font-bold text-base">tik-data</p>
           </div>
           <button
-            className="lg:hidden ml-2 shrink-0 text-slate-400 hover:text-white p-1 rounded"
+            className="lg:hidden ml-2 shrink-0 text-neutral-500 hover:text-white p-1 rounded"
             onClick={() => setOpen(false)}
             aria-label="メニューを閉じる"
           >
@@ -56,7 +57,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               key={href}
               href={href}
               onClick={() => setOpen(false)}
-              className="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white text-sm transition-colors"
+              className="flex items-center gap-3 px-3 py-2 rounded-lg text-neutral-400 hover:bg-white/10 hover:text-white text-sm transition-colors"
             >
               <span>{icon}</span>
               {label}
@@ -69,10 +70,10 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       {/* Main wrapper */}
       <div className="flex-1 flex flex-col overflow-hidden min-w-0">
         {/* Mobile top bar */}
-        <header className="lg:hidden flex items-center gap-3 px-4 py-3 bg-slate-900 border-b border-slate-800 shrink-0">
+        <header className="lg:hidden flex items-center gap-3 px-4 py-3 bg-black border-b border-neutral-800 shrink-0">
           <button
             onClick={() => setOpen(true)}
-            className="text-white p-1 -ml-1 hover:bg-slate-800 rounded"
+            className="text-white p-1 -ml-1 hover:bg-white/10 rounded"
             aria-label="メニューを開く"
           >
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
@@ -81,7 +82,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               <line x1="3" y1="15" x2="17" y2="15" />
             </svg>
           </button>
-          <p className="text-white font-bold text-sm">素材・台本DB</p>
+          <p className="text-white font-bold text-sm">tik-data</p>
         </header>
 
         <main className="flex-1 overflow-auto">

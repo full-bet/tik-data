@@ -94,22 +94,33 @@ export const dealCvEvents = pgTable('deal_cv_events', {
 })
 
 // =========================================================================
-// 素材（フォルダは物理階層を持たず、cast_member_id / deal_id によるフィルタ表示で代替）
+// 素材（フォルダは物理階層を持たず、キャスト・商材・要素タグによるフィルタ表示で代替）
 // =========================================================================
 
 export const materials = pgTable('materials', {
-  id:             uuid('id').primaryKey().defaultRandom(),
-  title:          text('title').notNull(),
-  file_url:       text('file_url'),
-  file_type:      text('file_type'),
-  cast_member_id: uuid('cast_member_id').references(() => members.id, { onDelete: 'set null' }),
-  deal_id:        uuid('deal_id').references(() => deals.id, { onDelete: 'set null' }),
-  notes:          text('notes'),
-  created_at:     timestamp('created_at', { withTimezone: true }).defaultNow(),
-  updated_at:     timestamp('updated_at', { withTimezone: true }).defaultNow(),
+  id:         uuid('id').primaryKey().defaultRandom(),
+  title:      text('title').notNull(), // 選択したタグから生成されるファイル名
+  file_url:   text('file_url'),
+  notes:      text('notes'),
+  created_at: timestamp('created_at', { withTimezone: true }).defaultNow(),
+  updated_at: timestamp('updated_at', { withTimezone: true }).defaultNow(),
 })
 
-// どの投稿（items）でその素材が使われたか。演者は materials.cast_member_id から辿る
+// 素材に出演しているキャスト（複数可）
+export const materialCasts = pgTable('material_casts', {
+  id:             uuid('id').primaryKey().defaultRandom(),
+  material_id:    uuid('material_id').notNull().references(() => materials.id, { onDelete: 'cascade' }),
+  cast_member_id: uuid('cast_member_id').notNull().references(() => members.id, { onDelete: 'cascade' }),
+}, (t) => [unique().on(t.material_id, t.cast_member_id)])
+
+// 素材が紐づく商材（複数可）
+export const materialDeals = pgTable('material_deals', {
+  id:          uuid('id').primaryKey().defaultRandom(),
+  material_id: uuid('material_id').notNull().references(() => materials.id, { onDelete: 'cascade' }),
+  deal_id:     uuid('deal_id').notNull().references(() => deals.id, { onDelete: 'cascade' }),
+}, (t) => [unique().on(t.material_id, t.deal_id)])
+
+// どの投稿（items）でその素材が使われたか。演者は material_casts から辿る
 export const itemMaterials = pgTable('item_materials', {
   id:          uuid('id').primaryKey().defaultRandom(),
   item_id:     uuid('item_id').notNull().references(() => items.id, { onDelete: 'cascade' }),

@@ -32,32 +32,32 @@ export default async function NewDevicePage() {
   return (
     <div className="p-4 sm:p-8 max-w-2xl">
       <div className="mb-8">
-        <Link href="/devices" className="text-slate-400 hover:text-slate-600 text-sm">
+        <Link href="/devices" className="text-neutral-500 hover:text-white text-sm">
           ← 端末一覧
         </Link>
-        <h1 className="text-2xl font-bold text-slate-900 mt-3">端末を追加</h1>
+        <h1 className="text-2xl font-bold text-white mt-3">端末を追加</h1>
       </div>
 
-      <form action={createDevice} className="bg-white rounded-xl border border-slate-200 p-6 space-y-5">
+      <form action={createDevice} className="bg-neutral-900 rounded-xl border border-neutral-800 p-6 space-y-5">
         <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1">
-            端末名 <span className="text-red-500">*</span>
+          <label className="block text-sm font-medium text-neutral-300 mb-1">
+            端末名 <span className="text-red-400">*</span>
           </label>
           <input
             name="name"
             required
             placeholder="例: そらi15, そらiXR"
-            className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
           />
         </div>
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">所有区分</label>
+            <label className="block text-sm font-medium text-neutral-300 mb-1">所有区分</label>
             <select
               name="owner_type"
               defaultValue=""
-              className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
             >
               <option value="">未指定</option>
               <option value="personal">個人端末</option>
@@ -65,11 +65,11 @@ export default async function NewDevicePage() {
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">担当者</label>
+            <label className="block text-sm font-medium text-neutral-300 mb-1">担当者</label>
             <select
               name="assigned_member_id"
               defaultValue=""
-              className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
             >
               <option value="">未指定</option>
               {(members ?? []).map(m => (
@@ -80,12 +80,12 @@ export default async function NewDevicePage() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1">利用メモ</label>
+          <label className="block text-sm font-medium text-neutral-300 mb-1">利用メモ</label>
           <textarea
             name="usage_note"
             rows={2}
             placeholder="ログイン用途、少しでも使う端末、等"
-            className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
+            className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
           />
         </div>
 
@@ -98,7 +98,7 @@ export default async function NewDevicePage() {
           </button>
           <Link
             href="/devices"
-            className="px-6 py-2 border border-slate-300 text-slate-600 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors"
+            className="px-6 py-2 border border-neutral-700 text-neutral-400 rounded-lg text-sm font-medium hover:bg-white/5 transition-colors"
           >
             キャンセル
           </Link>

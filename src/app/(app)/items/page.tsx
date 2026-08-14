@@ -14,8 +14,8 @@ export default async function ItemsPage() {
     <div className="p-4 sm:p-8">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">投稿管理</h1>
-          <p className="text-slate-500 text-sm mt-1">{items?.length ?? 0}件</p>
+          <h1 className="text-2xl font-bold text-white">投稿管理</h1>
+          <p className="text-neutral-500 text-sm mt-1">{items?.length ?? 0}件</p>
         </div>
         <form action={createItem}>
           <button
@@ -27,7 +27,7 @@ export default async function ItemsPage() {
         </form>
       </div>
 
-      <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
+      <div className="bg-neutral-900 rounded-xl border border-neutral-800 overflow-hidden">
         <ItemsTable items={items ?? []} />
       </div>
     </div>
