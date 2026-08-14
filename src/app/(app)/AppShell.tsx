@@ -10,6 +10,7 @@ const navItems = [
   { href: '/members', label: 'メンバー', icon: '👥' },
   { href: '/casts', label: 'キャスト', icon: '🧑' },
   { href: '/deals', label: '商材', icon: '💼' },
+  { href: '/clients', label: '取引先', icon: '🏢' },
   { href: '/materials', label: '素材', icon: '🎞️' },
   { href: '/devices', label: '端末', icon: '📱' },
   { href: '/analytics', label: 'アナリティクス', icon: '📊' },

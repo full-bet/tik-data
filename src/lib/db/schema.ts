@@ -43,15 +43,22 @@ export const castPhotos = pgTable('cast_photos', {
 })
 
 // =========================================================================
-// 商材
+// 取引先（商材提供元法人）
 // =========================================================================
 
 export const clients = pgTable('clients', {
-  id:         uuid('id').primaryKey().defaultRandom(),
-  name:       text('name').notNull(),
-  notes:      text('notes'),
-  created_at: timestamp('created_at', { withTimezone: true }).defaultNow(),
+  id:             uuid('id').primaryKey().defaultRandom(),
+  name:           text('name').notNull(),
+  contact_name:   text('contact_name'),   // 担当者名
+  contact_method: text('contact_method'), // 連絡方法・連絡先
+  notes:          text('notes'),
+  created_at:     timestamp('created_at', { withTimezone: true }).defaultNow(),
+  updated_at:     timestamp('updated_at', { withTimezone: true }).defaultNow(),
 })
+
+// =========================================================================
+// 商材
+// =========================================================================
 
 export const deals = pgTable('deals', {
   id:         uuid('id').primaryKey().defaultRandom(),
