@@ -87,50 +87,50 @@ export default async function ScriptDetailPage({ params }: { params: Promise<{ i
   return (
     <div className="p-4 sm:p-8 max-w-4xl">
       <div className="mb-6">
-        <Link href="/scripts" className="text-slate-400 hover:text-slate-600 text-sm">
+        <Link href="/scripts" className="text-neutral-500 hover:text-white text-sm">
           ← 台本一覧
         </Link>
       </div>
 
       {/* 台本編集 */}
-      <div className="bg-white rounded-xl border border-slate-200 p-6 mb-6">
-        <h2 className="font-semibold text-slate-800 mb-5">台本を編集</h2>
+      <div className="bg-neutral-900 rounded-xl border border-neutral-800 p-6 mb-6">
+        <h2 className="font-semibold text-neutral-200 mb-5">台本を編集</h2>
         <form action={updateScript} className="space-y-4">
           <input type="hidden" name="id" value={id} />
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">タイトル</label>
+            <label className="block text-sm font-medium text-neutral-300 mb-1">タイトル</label>
             <input
               name="title"
               defaultValue={script.title}
               required
-              className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">冒頭フック</label>
+              <label className="block text-sm font-medium text-neutral-300 mb-1">冒頭フック</label>
               <input
                 name="hook"
                 defaultValue={script.hook ?? ''}
-                className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">カテゴリ</label>
+              <label className="block text-sm font-medium text-neutral-300 mb-1">カテゴリ</label>
               <input
                 name="category"
                 defaultValue={script.category ?? ''}
-                className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
               />
             </div>
           </div>
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">台本内容</label>
+            <label className="block text-sm font-medium text-neutral-300 mb-1">台本内容</label>
             <textarea
               name="content"
               defaultValue={script.content ?? ''}
               rows={8}
-              className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
+              className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
             />
           </div>
           <div className="flex items-center justify-between pt-2">
@@ -150,17 +150,17 @@ export default async function ScriptDetailPage({ params }: { params: Promise<{ i
 
       {/* 動画紐付け */}
       {accounts && accounts.length > 0 && (
-        <div className="bg-white rounded-xl border border-slate-200 p-6 mb-6">
-          <h2 className="font-semibold text-slate-800 mb-4">動画を紐付ける</h2>
+        <div className="bg-neutral-900 rounded-xl border border-neutral-800 p-6 mb-6">
+          <h2 className="font-semibold text-neutral-200 mb-4">動画を紐付ける</h2>
           <form action={linkItem} className="space-y-4">
             <input type="hidden" name="script_id" value={id} />
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">アカウント</label>
+                <label className="block text-sm font-medium text-neutral-300 mb-1">アカウント</label>
                 <select
                   name="account_id"
                   required
-                  className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 >
                   {accounts.map(a => (
                     <option key={a.id} value={a.id}>
@@ -170,28 +170,28 @@ export default async function ScriptDetailPage({ params }: { params: Promise<{ i
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">投稿日時</label>
+                <label className="block text-sm font-medium text-neutral-300 mb-1">投稿日時</label>
                 <input
                   type="datetime-local"
                   name="posted_at"
-                  className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 />
               </div>
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">
+              <label className="block text-sm font-medium text-neutral-300 mb-1">
                 動画URLまたは動画ID
               </label>
               <input
                 name="video_input"
                 required
-                className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 placeholder="https://www.tiktok.com/@user/video/1234567890 または 1234567890"
               />
             </div>
             <button
               type="submit"
-              className="px-5 py-2 bg-slate-800 text-white rounded-lg text-sm font-medium hover:bg-slate-900 transition-colors"
+              className="px-5 py-2 bg-neutral-900 text-white rounded-lg text-sm font-medium hover:bg-white/10 transition-colors"
             >
               紐付ける
             </button>
@@ -200,48 +200,48 @@ export default async function ScriptDetailPage({ params }: { params: Promise<{ i
       )}
 
       {/* 紐付き投稿一覧 */}
-      <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
-        <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
-          <h2 className="font-semibold text-slate-800">紐付き投稿 ({items?.length ?? 0}件)</h2>
+      <div className="bg-neutral-900 rounded-xl border border-neutral-800 overflow-hidden">
+        <div className="px-6 py-4 border-b border-neutral-800 flex items-center justify-between">
+          <h2 className="font-semibold text-neutral-200">紐付き投稿 ({items?.length ?? 0}件)</h2>
         </div>
 
         {!items || items.length === 0 ? (
           <div className="p-12 text-center">
-            <p className="text-slate-400 text-sm">まだ動画が紐付けられていません</p>
+            <p className="text-neutral-500 text-sm">まだ動画が紐付けられていません</p>
           </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-slate-100 bg-slate-50">
-                  <th className="text-left px-6 py-3 text-slate-500 font-medium">動画ID</th>
-                  <th className="text-left px-4 py-3 text-slate-500 font-medium">投稿日</th>
-                  <th className="text-right px-4 py-3 text-slate-500 font-medium">初動72h再生</th>
-                  <th className="text-right px-4 py-3 text-slate-500 font-medium">初動いいね</th>
-                  <th className="text-right px-4 py-3 text-slate-500 font-medium">累計再生</th>
-                  <th className="text-right px-4 py-3 text-slate-500 font-medium">累計いいね</th>
+                <tr className="border-b border-neutral-800 bg-black">
+                  <th className="text-left px-6 py-3 text-neutral-500 font-medium">動画ID</th>
+                  <th className="text-left px-4 py-3 text-neutral-500 font-medium">投稿日</th>
+                  <th className="text-right px-4 py-3 text-neutral-500 font-medium">初動72h再生</th>
+                  <th className="text-right px-4 py-3 text-neutral-500 font-medium">初動いいね</th>
+                  <th className="text-right px-4 py-3 text-neutral-500 font-medium">累計再生</th>
+                  <th className="text-right px-4 py-3 text-neutral-500 font-medium">累計いいね</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100">
+              <tbody className="divide-y divide-neutral-800">
                 {items.map(item => (
-                  <tr key={item.id} className="hover:bg-slate-50">
+                  <tr key={item.id} className="hover:bg-white/5">
                     <td className="px-6 py-4">
                       <a
                         href={`https://www.tiktok.com/@_/video/${item.tiktok_video_id}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-indigo-600 hover:underline font-mono text-xs"
+                        className="text-indigo-400 hover:underline font-mono text-xs"
                       >
                         {item.tiktok_video_id}
                       </a>
                     </td>
-                    <td className="px-4 py-4 text-slate-500">
+                    <td className="px-4 py-4 text-neutral-500">
                       {item.posted_at ? new Date(item.posted_at).toLocaleDateString('ja-JP') : '—'}
                     </td>
-                    <td className="px-4 py-4 text-right text-slate-700">{fmt(item.initial_views ?? 0)}</td>
-                    <td className="px-4 py-4 text-right text-slate-700">{fmt(item.initial_likes ?? 0)}</td>
-                    <td className="px-4 py-4 text-right font-medium text-slate-900">{fmt(item.views ?? 0)}</td>
-                    <td className="px-4 py-4 text-right text-slate-700">{fmt(item.likes ?? 0)}</td>
+                    <td className="px-4 py-4 text-right text-neutral-300">{fmt(item.initial_views ?? 0)}</td>
+                    <td className="px-4 py-4 text-right text-neutral-300">{fmt(item.initial_likes ?? 0)}</td>
+                    <td className="px-4 py-4 text-right font-medium text-white">{fmt(item.views ?? 0)}</td>
+                    <td className="px-4 py-4 text-right text-neutral-300">{fmt(item.likes ?? 0)}</td>
                   </tr>
                 ))}
               </tbody>

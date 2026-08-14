@@ -34,9 +34,9 @@ export default function AddCompetitorForm() {
   }
 
   return (
-    <div className="bg-white rounded-xl border border-slate-200 p-6">
-      <h2 className="font-semibold text-slate-700 mb-1">競合動画を追加</h2>
-      <p className="text-xs text-slate-400 mb-4">TikTok の動画URLを貼り付けてください</p>
+    <div className="bg-neutral-900 rounded-xl border border-neutral-800 p-6">
+      <h2 className="font-semibold text-neutral-300 mb-1">競合動画を追加</h2>
+      <p className="text-xs text-neutral-500 mb-4">TikTok の動画URLを貼り付けてください</p>
 
       <form onSubmit={handleSubmit} className="space-y-3">
         <textarea
@@ -44,7 +44,7 @@ export default function AddCompetitorForm() {
           onChange={e => setUrl(e.target.value)}
           placeholder="https://www.tiktok.com/@user/video/..."
           rows={3}
-          className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
+          className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
         />
         <button
           type="submit"
@@ -53,7 +53,7 @@ export default function AddCompetitorForm() {
         >
           {status === 'loading' ? '取得中...' : '追加 →'}
         </button>
-        {error && <p className="text-xs text-red-500">{error}</p>}
+        {error && <p className="text-xs text-red-400">{error}</p>}
       </form>
     </div>
   )

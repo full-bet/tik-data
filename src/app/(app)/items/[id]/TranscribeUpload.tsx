@@ -54,12 +54,12 @@ export default function TranscribeUpload({ itemId }: { itemId: string }) {
         onClick={() => inputRef.current?.click()}
         className={`border-2 border-dashed rounded-xl p-6 text-center cursor-pointer transition-colors ${
           status === 'uploading'
-            ? 'border-indigo-300 bg-indigo-50'
+            ? 'border-indigo-500/40 bg-indigo-500/10'
             : status === 'done'
-            ? 'border-green-300 bg-green-50'
+            ? 'border-green-500/40 bg-green-500/10'
             : status === 'error'
-            ? 'border-red-300 bg-red-50'
-            : 'border-slate-200 hover:border-indigo-300 hover:bg-slate-50'
+            ? 'border-red-500/40 bg-red-500/10'
+            : 'border-neutral-800 hover:border-indigo-500/60 hover:bg-white/5'
         }`}
       >
         <input
@@ -72,26 +72,26 @@ export default function TranscribeUpload({ itemId }: { itemId: string }) {
 
         {status === 'uploading' ? (
           <div className="space-y-2">
-            <div className="w-6 h-6 border-2 border-indigo-400 border-t-transparent rounded-full animate-spin mx-auto" />
-            <p className="text-sm text-indigo-600">文字起こし中...</p>
+            <div className="w-6 h-6 border-2 border-indigo-500/60 border-t-transparent rounded-full animate-spin mx-auto" />
+            <p className="text-sm text-indigo-400">文字起こし中...</p>
           </div>
         ) : status === 'done' ? (
           <div className="space-y-1">
             <p className="text-2xl">✅</p>
-            <p className="text-sm text-green-700 font-medium">{message}</p>
-            <p className="text-xs text-slate-400">別のファイルを選択して上書きもできます</p>
+            <p className="text-sm text-green-400 font-medium">{message}</p>
+            <p className="text-xs text-neutral-500">別のファイルを選択して上書きもできます</p>
           </div>
         ) : status === 'error' ? (
           <div className="space-y-1">
             <p className="text-2xl">⚠️</p>
-            <p className="text-sm text-red-600">{message}</p>
-            <p className="text-xs text-slate-400">クリックして再試行</p>
+            <p className="text-sm text-red-400">{message}</p>
+            <p className="text-xs text-neutral-500">クリックして再試行</p>
           </div>
         ) : (
           <div className="space-y-1">
             <p className="text-2xl">🎬</p>
-            <p className="text-sm text-slate-600 font-medium">MP4をドラッグ＆ドロップ</p>
-            <p className="text-xs text-slate-400">またはクリックしてファイルを選択</p>
+            <p className="text-sm text-neutral-400 font-medium">MP4をドラッグ＆ドロップ</p>
+            <p className="text-xs text-neutral-500">またはクリックしてファイルを選択</p>
           </div>
         )}
       </div>

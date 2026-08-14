@@ -73,8 +73,8 @@ export default async function AnalyticsPage() {
     <div className="p-4 sm:p-8 space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">アナリティクス</h1>
-          <p className="text-slate-500 text-sm mt-1">
+          <h1 className="text-2xl font-bold text-white">アナリティクス</h1>
+          <p className="text-neutral-500 text-sm mt-1">
             {latestImport
               ? `最終インポート: ${new Date(latestImport.imported_at).toLocaleDateString('ja-JP')} — ${latestImport.row_count}件`
               : 'インポート履歴なし'}
@@ -88,13 +88,13 @@ export default async function AnalyticsPage() {
           <UploadForm />
 
           {(imports?.length ?? 0) > 0 && (
-            <div className="bg-white rounded-xl border border-slate-200 p-4">
-              <h3 className="text-sm font-semibold text-slate-700 mb-3">インポート履歴</h3>
+            <div className="bg-neutral-900 rounded-xl border border-neutral-800 p-4">
+              <h3 className="text-sm font-semibold text-neutral-300 mb-3">インポート履歴</h3>
               <ul className="space-y-2">
                 {imports!.map(imp => (
                   <li key={imp.id} className="flex items-center justify-between text-xs">
-                    <span className="text-slate-600 truncate max-w-[150px]">{imp.filename}</span>
-                    <span className="text-slate-400">
+                    <span className="text-neutral-400 truncate max-w-[150px]">{imp.filename}</span>
+                    <span className="text-neutral-500">
                       {new Date(imp.imported_at).toLocaleDateString('ja-JP')} · {imp.row_count}件
                     </span>
                   </li>
@@ -110,9 +110,9 @@ export default async function AnalyticsPage() {
           {latestImport && (
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               {kpiCards.map(k => (
-                <div key={k.label} className="bg-white rounded-xl border border-slate-200 p-4">
-                  <p className="text-slate-400 text-xs">{k.icon} {k.label}</p>
-                  <p className="text-xl font-bold text-slate-900 mt-1">{k.value}</p>
+                <div key={k.label} className="bg-neutral-900 rounded-xl border border-neutral-800 p-4">
+                  <p className="text-neutral-500 text-xs">{k.icon} {k.label}</p>
+                  <p className="text-xl font-bold text-white mt-1">{k.value}</p>
                 </div>
               ))}
             </div>
@@ -120,8 +120,8 @@ export default async function AnalyticsPage() {
 
           {/* Trend chart */}
           {trendData.length > 0 && (
-            <div className="bg-white rounded-xl border border-slate-200 p-6">
-              <h2 className="font-semibold text-slate-700 mb-4">インポート別トレンド</h2>
+            <div className="bg-neutral-900 rounded-xl border border-neutral-800 p-6">
+              <h2 className="font-semibold text-neutral-300 mb-4">インポート別トレンド</h2>
               <TrendChart data={trendData} />
             </div>
           )}
@@ -131,13 +131,13 @@ export default async function AnalyticsPage() {
 
           {/* Ranking */}
           {rankingData.length > 0 && (
-            <div className="bg-white rounded-xl border border-slate-200 p-6">
-              <h2 className="font-semibold text-slate-700 mb-4">再生数ランキング（最新インポート）</h2>
+            <div className="bg-neutral-900 rounded-xl border border-neutral-800 p-6">
+              <h2 className="font-semibold text-neutral-300 mb-4">再生数ランキング（最新インポート）</h2>
               <RankingChart data={rankingData} />
               <div className="overflow-x-auto">
               <table className="w-full text-xs mt-4">
                 <thead>
-                  <tr className="text-left text-slate-400 border-b border-slate-100">
+                  <tr className="text-left text-neutral-500 border-b border-neutral-800">
                     <th className="pb-2 font-medium">#</th>
                     <th className="pb-2 font-medium">タイトル</th>
                     <th className="pb-2 text-right font-medium">再生</th>
@@ -147,12 +147,12 @@ export default async function AnalyticsPage() {
                 </thead>
                 <tbody>
                   {rankingData.map((r, i) => (
-                    <tr key={i} className="border-b border-slate-50 hover:bg-slate-50">
-                      <td className="py-2 text-slate-400">{i + 1}</td>
-                      <td className="py-2 text-slate-700 max-w-[200px] truncate">{r.video_title ?? '—'}</td>
-                      <td className="py-2 text-right text-slate-900 font-medium">{fmt(r.views)}</td>
-                      <td className="py-2 text-right text-slate-600">{fmt(r.likes)}</td>
-                      <td className="py-2 text-right text-slate-500">{r.engagement}</td>
+                    <tr key={i} className="border-b border-neutral-900 hover:bg-white/5">
+                      <td className="py-2 text-neutral-500">{i + 1}</td>
+                      <td className="py-2 text-neutral-300 max-w-[200px] truncate">{r.video_title ?? '—'}</td>
+                      <td className="py-2 text-right text-white font-medium">{fmt(r.views)}</td>
+                      <td className="py-2 text-right text-neutral-400">{fmt(r.likes)}</td>
+                      <td className="py-2 text-right text-neutral-500">{r.engagement}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -162,10 +162,10 @@ export default async function AnalyticsPage() {
           )}
 
           {!latestImport && (
-            <div className="bg-slate-50 rounded-xl border border-dashed border-slate-300 p-12 text-center">
+            <div className="bg-black rounded-xl border border-dashed border-neutral-700 p-12 text-center">
               <p className="text-4xl mb-3">📊</p>
-              <p className="text-slate-600 font-medium">まだデータがありません</p>
-              <p className="text-slate-400 text-sm mt-1">左のフォームからxlsxをインポートしてください</p>
+              <p className="text-neutral-400 font-medium">まだデータがありません</p>
+              <p className="text-neutral-500 text-sm mt-1">左のフォームからxlsxをインポートしてください</p>
             </div>
           )}
         </div>

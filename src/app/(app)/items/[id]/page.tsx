@@ -23,14 +23,14 @@ export default async function ItemDetailPage({ params }: { params: Promise<{ id:
   return (
     <div className="p-4 sm:p-8 max-w-3xl">
       <div className="mb-6">
-        <Link href="/items" className="text-slate-400 hover:text-slate-600 text-sm">
+        <Link href="/items" className="text-neutral-500 hover:text-white text-sm">
           ← 投稿管理
         </Link>
       </div>
 
       {/* 動画情報 */}
-      <div className="bg-white rounded-xl border border-slate-200 p-6 mb-5">
-        <h2 className="font-semibold text-slate-800 mb-5">動画情報</h2>
+      <div className="bg-neutral-900 rounded-xl border border-neutral-800 p-6 mb-5">
+        <h2 className="font-semibold text-neutral-200 mb-5">動画情報</h2>
         <div className="space-y-4">
           <SaveField itemId={id} field="video_title" label="動画タイトル" defaultValue={item.video_title} />
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -42,7 +42,7 @@ export default async function ItemDetailPage({ params }: { params: Promise<{ id:
             <SaveField itemId={id} field="hook" label="冒頭フック" defaultValue={item.hook ?? ''} placeholder="例: 〇〇な人は見て" />
           </div>
           {item.video_url && (
-            <a href={item.video_url} target="_blank" rel="noopener noreferrer" className="inline-block text-xs text-indigo-600 hover:underline">
+            <a href={item.video_url} target="_blank" rel="noopener noreferrer" className="inline-block text-xs text-indigo-400 hover:underline">
               TikTokで見る →
             </a>
           )}
@@ -50,10 +50,10 @@ export default async function ItemDetailPage({ params }: { params: Promise<{ id:
       </div>
 
       {/* 台本 */}
-      <div className="bg-white rounded-xl border border-slate-200 p-6 mb-5">
+      <div className="bg-neutral-900 rounded-xl border border-neutral-800 p-6 mb-5">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="font-semibold text-slate-800">台本</h2>
-          <span className="text-xs text-slate-400">MP4をアップロードして自動生成</span>
+          <h2 className="font-semibold text-neutral-200">台本</h2>
+          <span className="text-xs text-neutral-500">MP4をアップロードして自動生成</span>
         </div>
         <TranscribeUpload itemId={id} />
         <SaveTextarea itemId={id} field="script_content" defaultValue={item.script_content ?? ''} placeholder="台本の内容を入力、またはMP4をアップロードして自動生成..." />
@@ -61,10 +61,10 @@ export default async function ItemDetailPage({ params }: { params: Promise<{ id:
 
       {/* xlsxインポートデータ */}
       {snapshot && (
-        <div className="bg-white rounded-xl border border-slate-200 p-6 mb-5">
+        <div className="bg-neutral-900 rounded-xl border border-neutral-800 p-6 mb-5">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="font-semibold text-slate-800">アナリティクス（最新インポート）</h2>
-            <span className="text-xs text-slate-400">尺: {snapshot.duration ?? '—'}</span>
+            <h2 className="font-semibold text-neutral-200">アナリティクス（最新インポート）</h2>
+            <span className="text-xs text-neutral-500">尺: {snapshot.duration ?? '—'}</span>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-4">
             {[
@@ -75,9 +75,9 @@ export default async function ItemDetailPage({ params }: { params: Promise<{ id:
               { label: 'フォロワー増加', value: (snapshot.new_followers ?? 0).toLocaleString() },
               { label: '販売数',        value: (snapshot.items_sold ?? 0).toLocaleString() },
             ].map(({ label, value }) => (
-              <div key={label} className="bg-slate-50 rounded-lg p-3">
-                <p className="text-xs text-slate-400 mb-0.5">{label}</p>
-                <p className="text-lg font-bold text-slate-900">{value}</p>
+              <div key={label} className="bg-black rounded-lg p-3">
+                <p className="text-xs text-neutral-500 mb-0.5">{label}</p>
+                <p className="text-lg font-bold text-white">{value}</p>
               </div>
             ))}
           </div>
@@ -88,9 +88,9 @@ export default async function ItemDetailPage({ params }: { params: Promise<{ id:
               { label: 'GMV',          value: `¥${Number(snapshot.gmv ?? 0).toLocaleString()}` },
               { label: 'Direct GMV',   value: `¥${Number(snapshot.direct_gmv ?? 0).toLocaleString()}` },
             ].map(({ label, value }) => (
-              <div key={label} className="bg-indigo-50 rounded-lg p-3">
+              <div key={label} className="bg-indigo-500/10 rounded-lg p-3">
                 <p className="text-xs text-indigo-400 mb-0.5">{label}</p>
-                <p className="text-lg font-bold text-indigo-700">{value}</p>
+                <p className="text-lg font-bold text-indigo-300">{value}</p>
               </div>
             ))}
           </div>
@@ -98,11 +98,11 @@ export default async function ItemDetailPage({ params }: { params: Promise<{ id:
       )}
 
       {/* 指標 */}
-      <div className="bg-white rounded-xl border border-slate-200 p-6 mb-5">
-        <h2 className="font-semibold text-slate-800 mb-5">指標（手動入力）</h2>
+      <div className="bg-neutral-900 rounded-xl border border-neutral-800 p-6 mb-5">
+        <h2 className="font-semibold text-neutral-200 mb-5">指標（手動入力）</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <div>
-            <p className="text-xs font-semibold text-indigo-500 uppercase tracking-wider mb-3">初動 72h</p>
+            <p className="text-xs font-semibold text-indigo-400 uppercase tracking-wider mb-3">初動 72h</p>
             <div className="space-y-3">
               {[
                 { field: 'initial_views',            label: '再生数' },
@@ -111,14 +111,14 @@ export default async function ItemDetailPage({ params }: { params: Promise<{ id:
                 { field: 'initial_cv_count',         label: 'CV数' },
               ].map(({ field, label }) => (
                 <div key={field} className="flex items-center justify-between gap-3">
-                  <span className="text-xs text-slate-500 whitespace-nowrap">{label}</span>
+                  <span className="text-xs text-neutral-500 whitespace-nowrap">{label}</span>
                   <SaveNumber itemId={id} field={field} defaultValue={item[field as keyof typeof item] as number ?? 0} />
                 </div>
               ))}
             </div>
           </div>
           <div>
-            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">累計</p>
+            <p className="text-xs font-semibold text-neutral-500 uppercase tracking-wider mb-3">累計</p>
             <div className="space-y-3">
               {[
                 { field: 'views',            label: '再生数' },
@@ -127,7 +127,7 @@ export default async function ItemDetailPage({ params }: { params: Promise<{ id:
                 { field: 'cv_count',         label: 'CV数' },
               ].map(({ field, label }) => (
                 <div key={field} className="flex items-center justify-between gap-3">
-                  <span className="text-xs text-slate-500 whitespace-nowrap">{label}</span>
+                  <span className="text-xs text-neutral-500 whitespace-nowrap">{label}</span>
                   <SaveNumber itemId={id} field={field} defaultValue={item[field as keyof typeof item] as number ?? 0} />
                 </div>
               ))}
@@ -156,16 +156,16 @@ function SaveField({ itemId, field, label, defaultValue, placeholder, type = 'te
   }
   return (
     <div>
-      <label className="block text-xs font-medium text-slate-500 mb-1">{label}</label>
+      <label className="block text-xs font-medium text-neutral-500 mb-1">{label}</label>
       <form action={save} className="flex gap-2">
         <input
           type={type}
           name={field}
           defaultValue={defaultValue}
           placeholder={placeholder}
-          className="flex-1 px-3 py-2 border border-slate-300 rounded-lg text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          className="flex-1 px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
         />
-        <button type="submit" className="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-lg text-xs transition-colors">
+        <button type="submit" className="px-3 py-2 bg-neutral-800 hover:bg-neutral-700 text-neutral-400 rounded-lg text-xs transition-colors">
           保存
         </button>
       </form>
@@ -188,9 +188,9 @@ function SaveTextarea({ itemId, field, defaultValue, placeholder }: {
         defaultValue={defaultValue}
         placeholder={placeholder}
         rows={10}
-        className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
+        className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
       />
-      <button type="submit" className="mt-2 px-4 py-1.5 bg-slate-800 text-white rounded-lg text-xs font-medium hover:bg-slate-900 transition-colors">
+      <button type="submit" className="mt-2 px-4 py-1.5 bg-neutral-900 text-white rounded-lg text-xs font-medium hover:bg-white/10 transition-colors">
         保存
       </button>
     </form>
@@ -211,9 +211,9 @@ function SaveNumber({ itemId, field, defaultValue }: {
         type="number"
         name={field}
         defaultValue={defaultValue}
-        className="w-28 px-2 py-1.5 border border-slate-300 rounded-lg text-sm text-slate-900 text-right focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        className="w-28 px-2 py-1.5 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm text-white text-right focus:outline-none focus:ring-2 focus:ring-indigo-500"
       />
-      <button type="submit" className="px-2 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-lg text-xs transition-colors">
+      <button type="submit" className="px-2 py-1.5 bg-neutral-800 hover:bg-neutral-700 text-neutral-400 rounded-lg text-xs transition-colors">
         保存
       </button>
     </form>
@@ -227,7 +227,7 @@ function DeleteButton({ id }: { id: string }) {
   }
   return (
     <form action={handleDelete}>
-      <button type="submit" className="text-sm text-red-400 hover:text-red-600 transition-colors">
+      <button type="submit" className="text-sm text-red-400 hover:text-red-300 transition-colors">
         このアイテムを削除
       </button>
     </form>

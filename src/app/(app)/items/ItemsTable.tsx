@@ -78,10 +78,10 @@ function EditableNumberCell({
           onFocus={e => e.target.select()}
           onBlur={handleBlur}
           onKeyDown={handleKeyDown}
-          className="w-full text-right bg-indigo-50 border border-indigo-400 rounded px-1 py-1.5 text-sm text-slate-900 focus:outline-none"
+          className="w-full text-right bg-indigo-500/10 border border-indigo-500/60 rounded px-1 py-1.5 text-sm text-white focus:outline-none"
         />
       ) : (
-        <span className="block py-1.5 px-1 text-sm text-slate-700 cursor-pointer group-hover:bg-slate-50 rounded">
+        <span className="block py-1.5 px-1 text-sm text-neutral-300 cursor-pointer group-hover:bg-white/5 rounded">
           {fmt(value)}
         </span>
       )}
@@ -113,30 +113,30 @@ export default function ItemsTable({ items: initialItems }: { items: Item[] }) {
     <div className="overflow-x-auto">
       <table className="w-full text-sm border-collapse">
         <thead>
-          <tr className="bg-slate-100 border-y border-slate-200">
-            <th className="text-left px-4 py-2.5 text-xs font-semibold text-slate-500 w-56 sticky left-0 bg-slate-100 z-10">
+          <tr className="bg-neutral-800 border-y border-neutral-800">
+            <th className="text-left px-4 py-2.5 text-xs font-semibold text-neutral-500 w-56 sticky left-0 bg-neutral-800 z-10">
               動画タイトル
             </th>
-            <th className="text-left px-3 py-2.5 text-xs font-semibold text-slate-500 w-24">カテゴリ</th>
-            <th className="text-left px-3 py-2.5 text-xs font-semibold text-slate-500 w-24">投稿日</th>
+            <th className="text-left px-3 py-2.5 text-xs font-semibold text-neutral-500 w-24">カテゴリ</th>
+            <th className="text-left px-3 py-2.5 text-xs font-semibold text-neutral-500 w-24">投稿日</th>
             <th className="text-right px-3 py-2.5 text-xs font-semibold text-indigo-400 w-20" colSpan={4}>
               初動 72h ▼
             </th>
-            <th className="w-px bg-slate-300" />
-            <th className="text-right px-3 py-2.5 text-xs font-semibold text-slate-500 w-20" colSpan={4}>
+            <th className="w-px bg-neutral-600" />
+            <th className="text-right px-3 py-2.5 text-xs font-semibold text-neutral-500 w-20" colSpan={4}>
               累計 ▼
             </th>
             <th className="w-8" />
           </tr>
-          <tr className="bg-slate-50 border-b border-slate-200">
-            <th className="sticky left-0 bg-slate-50 z-10" />
+          <tr className="bg-black border-b border-neutral-800">
+            <th className="sticky left-0 bg-black z-10" />
             <th />
             <th />
             {numericFields.map(({ field, label, group }) => (
               <th
                 key={field}
                 className={`text-right px-3 py-1.5 text-xs font-medium ${
-                  group === 'initial' ? 'text-indigo-400' : 'text-slate-400'
+                  group === 'initial' ? 'text-indigo-400' : 'text-neutral-500'
                 }`}
               >
                 {label}
@@ -146,34 +146,34 @@ export default function ItemsTable({ items: initialItems }: { items: Item[] }) {
             <th />
           </tr>
         </thead>
-        <tbody className="divide-y divide-slate-100">
+        <tbody className="divide-y divide-neutral-800">
           {initialItems.length === 0 ? (
             <tr>
-              <td colSpan={14} className="text-center py-16 text-slate-400 text-sm">
+              <td colSpan={14} className="text-center py-16 text-neutral-500 text-sm">
                 アイテムがありません。「+ 追加」から作成してください
               </td>
             </tr>
           ) : (
             initialItems.map(item => (
-              <tr key={item.id} className="hover:bg-slate-50 transition-colors group/row">
+              <tr key={item.id} className="hover:bg-white/5 transition-colors group/row">
                 {/* タイトル */}
-                <td className="px-4 py-0 sticky left-0 bg-white group-hover/row:bg-slate-50 z-10 transition-colors">
+                <td className="px-4 py-0 sticky left-0 bg-neutral-900 group-hover/row:bg-black z-10 transition-colors">
                   <Link
                     href={`/items/${item.id}`}
-                    className="block py-2 font-medium text-indigo-600 hover:underline truncate max-w-[220px]"
+                    className="block py-2 font-medium text-indigo-400 hover:underline truncate max-w-[220px]"
                   >
                     {item.video_title}
                   </Link>
                 </td>
                 {/* カテゴリ */}
                 <td className="px-3 py-0">
-                  <span className="block py-2 text-slate-500 text-xs truncate">
+                  <span className="block py-2 text-neutral-500 text-xs truncate">
                     {item.category ?? '—'}
                   </span>
                 </td>
                 {/* 投稿日 */}
                 <td className="px-3 py-0">
-                  <span className="block py-2 text-slate-500 text-xs">
+                  <span className="block py-2 text-neutral-500 text-xs">
                     {item.posted_at
                       ? new Date(item.posted_at).toLocaleDateString('ja-JP', { month: 'numeric', day: 'numeric' })
                       : '—'}
@@ -191,12 +191,12 @@ export default function ItemsTable({ items: initialItems }: { items: Item[] }) {
                     onSave={val => handleSave(item.id, field, val)}
                   />
                 ))}
-                <td className="w-px bg-slate-100" />
+                <td className="w-px bg-neutral-800" />
                 {/* 詳細リンク */}
                 <td className="px-2">
                   <Link
                     href={`/items/${item.id}`}
-                    className="opacity-0 group-hover/row:opacity-100 text-slate-300 hover:text-slate-500 text-xs transition-opacity"
+                    className="opacity-0 group-hover/row:opacity-100 text-neutral-400 hover:text-white text-xs transition-opacity"
                   >
                     →
                   </Link>

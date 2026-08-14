@@ -24,8 +24,8 @@ export default async function MaterialsPage() {
     <div className="p-4 sm:p-8">
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">素材</h1>
-          <p className="text-slate-500 text-sm mt-1">{rows.length}件</p>
+          <h1 className="text-2xl font-bold text-white">素材</h1>
+          <p className="text-neutral-500 text-sm mt-1">{rows.length}件</p>
         </div>
         <Link
           href="/materials/new"
@@ -36,9 +36,9 @@ export default async function MaterialsPage() {
       </div>
 
       {rows.length === 0 ? (
-        <div className="bg-white rounded-xl border border-slate-200 p-16 text-center">
+        <div className="bg-neutral-900 rounded-xl border border-neutral-800 p-16 text-center">
           <p className="text-4xl mb-4">🎞️</p>
-          <p className="text-slate-600 font-medium">素材がまだ登録されていません</p>
+          <p className="text-neutral-400 font-medium">素材がまだ登録されていません</p>
           <Link
             href="/materials/new"
             className="inline-block mt-4 px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700"
@@ -49,16 +49,16 @@ export default async function MaterialsPage() {
       ) : (
         <div className="grid gap-3">
           {rows.map(m => (
-            <div key={m.id} className="bg-white rounded-xl border border-slate-200 p-5">
+            <div key={m.id} className="bg-neutral-900 rounded-xl border border-neutral-800 p-5">
               <div className="flex items-start justify-between">
                 <div className="min-w-0">
-                  <p className="font-semibold text-slate-900">{m.title}</p>
-                  <p className="text-slate-500 text-sm mt-1">
+                  <p className="font-semibold text-white">{m.title}</p>
+                  <p className="text-neutral-500 text-sm mt-1">
                     {[m.members?.name, m.deals?.name].filter(Boolean).join(' / ') || '—'}
                   </p>
                 </div>
                 {m.file_type && (
-                  <span className="inline-block px-2 py-0.5 bg-indigo-50 text-indigo-600 rounded text-xs font-medium shrink-0">
+                  <span className="inline-block px-2 py-0.5 bg-indigo-500/10 text-indigo-400 rounded text-xs font-medium shrink-0">
                     {m.file_type}
                   </span>
                 )}
@@ -68,7 +68,7 @@ export default async function MaterialsPage() {
                   href={m.file_url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-block text-indigo-600 text-xs mt-2 hover:underline truncate max-w-full"
+                  className="inline-block text-indigo-400 text-xs mt-2 hover:underline truncate max-w-full"
                 >
                   {m.file_url}
                 </a>

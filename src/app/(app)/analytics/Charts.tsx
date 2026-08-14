@@ -25,13 +25,15 @@ export function TrendChart({ data }: { data: TrendPoint[] }) {
   return (
     <ResponsiveContainer width="100%" height={240}>
       <LineChart data={data} margin={{ top: 5, right: 20, left: 0, bottom: 5 }}>
-        <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
+        <CartesianGrid strokeDasharray="3 3" stroke="#27272a" />
         <XAxis dataKey="date" tick={{ fontSize: 11 }} stroke="#94a3b8" />
         <YAxis tick={{ fontSize: 11 }} stroke="#94a3b8" tickFormatter={n => n >= 10000 ? `${(n/10000).toFixed(0)}万` : String(n)} />
         <Tooltip
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           formatter={(v: any) => [Number(v).toLocaleString()]}
           labelFormatter={l => `インポート日: ${l}`}
+          contentStyle={{ background: '#171717', border: '1px solid #27272a', borderRadius: 8, color: '#fff' }}
+          labelStyle={{ color: '#fff' }}
         />
         <Legend iconType="circle" iconSize={8} />
         <Line type="monotone" dataKey="views" name="再生数" stroke="#6366f1" strokeWidth={2} dot={{ r: 4 }} />
@@ -53,11 +55,15 @@ export function RankingChart({ data }: { data: VideoRank[] }) {
   return (
     <ResponsiveContainer width="100%" height={Math.max(200, shortened.length * 36)}>
       <BarChart data={shortened} layout="vertical" margin={{ top: 0, right: 40, left: 0, bottom: 0 }}>
-        <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
+        <CartesianGrid strokeDasharray="3 3" stroke="#27272a" />
         <XAxis type="number" tick={{ fontSize: 11 }} stroke="#94a3b8" tickFormatter={n => n >= 10000 ? `${(n/10000).toFixed(0)}万` : String(n)} />
         <YAxis type="category" dataKey="label" width={130} tick={{ fontSize: 11 }} stroke="#94a3b8" />
-        {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-        <Tooltip formatter={(v: any) => [Number(v).toLocaleString(), '再生数']} />
+        <Tooltip
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          formatter={(v: any) => [Number(v).toLocaleString(), '再生数']}
+          contentStyle={{ background: '#171717', border: '1px solid #27272a', borderRadius: 8, color: '#fff' }}
+          labelStyle={{ color: '#fff' }}
+        />
         <Bar dataKey="views" name="再生数" fill="#6366f1" radius={[0, 4, 4, 0]} />
       </BarChart>
     </ResponsiveContainer>
@@ -66,7 +72,7 @@ export function RankingChart({ data }: { data: VideoRank[] }) {
 
 function EmptyState() {
   return (
-    <div className="flex items-center justify-center h-40 text-slate-400 text-sm">
+    <div className="flex items-center justify-center h-40 text-neutral-500 text-sm">
       データがありません
     </div>
   )

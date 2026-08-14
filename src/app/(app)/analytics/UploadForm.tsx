@@ -36,14 +36,14 @@ export default function UploadForm() {
   }
 
   return (
-    <div className="bg-white rounded-xl border border-slate-200 p-6">
-      <h2 className="font-semibold text-slate-700 mb-3">データをインポート</h2>
-      <p className="text-xs text-slate-500 mb-4">
+    <div className="bg-neutral-900 rounded-xl border border-neutral-800 p-6">
+      <h2 className="font-semibold text-neutral-300 mb-3">データをインポート</h2>
+      <p className="text-xs text-neutral-500 mb-4">
         TikTokクリエイターセンター → アナリティクス → エクスポートしたxlsxファイルをアップロードしてください
       </p>
 
       <div
-        className="border-2 border-dashed border-slate-300 rounded-lg p-8 text-center cursor-pointer hover:border-indigo-400 hover:bg-indigo-50 transition-colors"
+        className="border-2 border-dashed border-neutral-700 rounded-lg p-8 text-center cursor-pointer hover:border-indigo-500/70 hover:bg-indigo-500/100/10 transition-colors"
         onClick={() => inputRef.current?.click()}
         onDragOver={e => e.preventDefault()}
         onDrop={e => {
@@ -53,12 +53,12 @@ export default function UploadForm() {
         }}
       >
         {status === 'uploading' ? (
-          <p className="text-sm text-indigo-600 animate-pulse">処理中...</p>
+          <p className="text-sm text-indigo-400 animate-pulse">処理中...</p>
         ) : (
           <>
             <p className="text-3xl mb-2">📂</p>
-            <p className="text-sm text-slate-600">クリックまたはドラッグ＆ドロップ</p>
-            <p className="text-xs text-slate-400 mt-1">.xlsx ファイル</p>
+            <p className="text-sm text-neutral-400">クリックまたはドラッグ＆ドロップ</p>
+            <p className="text-xs text-neutral-500 mt-1">.xlsx ファイル</p>
           </>
         )}
       </div>
@@ -76,7 +76,7 @@ export default function UploadForm() {
       />
 
       {message && (
-        <p className={`mt-3 text-sm ${status === 'error' ? 'text-red-600' : 'text-green-600'}`}>
+        <p className={`mt-3 text-sm ${status === 'error' ? 'text-red-400' : 'text-green-400'}`}>
           {status === 'done' ? '✓ ' : '✗ '}{message}
         </p>
       )}
