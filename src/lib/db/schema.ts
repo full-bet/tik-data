@@ -70,6 +70,10 @@ export const deals = pgTable('deals', {
   characteristics:     text('characteristics'),     // 商材の特徴
   selection_rationale: text('selection_rationale'), // この商材でテストを行う選定理由
 
+  account_review_required: boolean('account_review_required').default(false), // アカウント審査 有無
+  max_count:               integer('max_count'),                              // 上限件数
+  approval_condition:      text('approval_condition'),                        // 承認条件
+
   created_at: timestamp('created_at', { withTimezone: true }).defaultNow(),
   updated_at: timestamp('updated_at', { withTimezone: true }).defaultNow(),
 })
@@ -337,7 +341,7 @@ export const tags = pgTable('tags', {
   category: text('category'),
 }, (t) => [unique().on(t.name, t.category)])
 
-// entity_type: 'member' | 'cast_profile' | 'deal' | 'material' | 'account' | 'item' | 'script' | 'device' 等
+// entity_type: 'member' | 'cast_profile' | 'deal' | 'material' | 'account' | 'item' | 'script' | 'device' | 'knowledge_article' 等
 export const taggables = pgTable('taggables', {
   id:          uuid('id').primaryKey().defaultRandom(),
   tag_id:      uuid('tag_id').notNull().references(() => tags.id, { onDelete: 'cascade' }),
@@ -345,6 +349,19 @@ export const taggables = pgTable('taggables', {
   entity_id:   uuid('entity_id').notNull(),
   created_at:  timestamp('created_at', { withTimezone: true }).defaultNow(),
 }, (t) => [unique().on(t.tag_id, t.entity_type, t.entity_id)])
+
+// =========================================================================
+// ナレッジ（社内ドキュメント。Markdown本文、カテゴリ分類は tags/taggables を流用）
+// =========================================================================
+
+export const knowledgeArticles = pgTable('knowledge_articles', {
+  id:               uuid('id').primaryKey().defaultRandom(),
+  title:            text('title').notNull(),
+  content:          text('content'), // Markdown本文
+  author_member_id: uuid('author_member_id').references(() => members.id, { onDelete: 'set null' }),
+  created_at:       timestamp('created_at', { withTimezone: true }).defaultNow(),
+  updated_at:       timestamp('updated_at', { withTimezone: true }).defaultNow(),
+})
 
 // =========================================================================
 // 競合分析（既存機能。ユーザースコープを撤廃し社内共有に）

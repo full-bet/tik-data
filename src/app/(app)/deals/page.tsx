@@ -6,7 +6,7 @@ export default async function DealsPage() {
 
   const { data: deals } = await supabase
     .from('deals')
-    .select('id,name,unit_price,characteristics,created_at,clients(name)')
+    .select('id,name,unit_price,characteristics,account_review_required,created_at,clients(name)')
     .order('created_at', { ascending: false })
 
   type DealRow = {
@@ -14,6 +14,7 @@ export default async function DealsPage() {
     name: string
     unit_price: string | null
     characteristics: string | null
+    account_review_required: boolean | null
     clients: { name: string } | null
   }
   const rows = (deals ?? []) as unknown as DealRow[]
@@ -57,11 +58,18 @@ export default async function DealsPage() {
                   <p className="font-semibold text-white">{d.name}</p>
                   <p className="text-neutral-500 text-sm mt-1">{d.clients?.name ?? '提供元法人未設定'}</p>
                 </div>
-                {d.unit_price && (
-                  <span className="inline-block px-2 py-0.5 bg-indigo-500/10 text-indigo-400 rounded text-xs font-medium shrink-0">
-                    単価 {d.unit_price}
-                  </span>
-                )}
+                <div className="flex gap-1.5 shrink-0">
+                  {d.account_review_required && (
+                    <span className="inline-block px-2 py-0.5 bg-neutral-800 text-neutral-300 rounded text-xs font-medium">
+                      審査あり
+                    </span>
+                  )}
+                  {d.unit_price && (
+                    <span className="inline-block px-2 py-0.5 bg-neutral-500/10 text-neutral-300 rounded text-xs font-medium">
+                      単価 {d.unit_price}
+                    </span>
+                  )}
+                </div>
               </div>
               {d.characteristics && (
                 <p className="text-neutral-400 text-sm mt-3 line-clamp-2">{d.characteristics}</p>

@@ -5,6 +5,7 @@ import Link from 'next/link'
 
 const navItems = [
   { href: '/items', label: '投稿管理', icon: '📋' },
+  { href: '/knowledge', label: 'ナレッジ', icon: '📚' },
   { href: '/scripts', label: '台本', icon: '📝' },
   { href: '/tests', label: 'テスト', icon: '🧪' },
   { href: '/members', label: 'メンバー', icon: '👥' },

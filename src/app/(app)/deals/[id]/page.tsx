@@ -2,6 +2,22 @@ import { createClient } from '@/lib/supabase/server'
 import { redirect, notFound } from 'next/navigation'
 import Link from 'next/link'
 
+async function updateReviewInfo(formData: FormData) {
+  'use server'
+  const supabase = await createClient()
+  const dealId = formData.get('deal_id') as string
+  const maxCount = formData.get('max_count') as string
+
+  await supabase.from('deals').update({
+    account_review_required: formData.get('account_review_required') === 'on',
+    max_count: maxCount ? Number(maxCount) : null,
+    approval_condition: (formData.get('approval_condition') as string) || null,
+    updated_at: new Date().toISOString(),
+  }).eq('id', dealId)
+
+  redirect(`/deals/${dealId}?saved=1`)
+}
+
 async function addDealContact(formData: FormData) {
   'use server'
   const supabase = await createClient()
@@ -114,6 +130,46 @@ export default async function DealDetailPage({ params }: { params: Promise<{ id:
         </Link>
         <h1 className="text-2xl font-bold text-white mt-3">{deal.name}</h1>
         <p className="text-neutral-500 text-sm mt-1">{deal.clients?.name ?? '提供元法人未設定'}</p>
+      </div>
+
+      <div className="bg-neutral-900 rounded-xl border border-neutral-800 p-6">
+        <h2 className="font-semibold text-neutral-200 mb-4">アカウント審査</h2>
+        <form action={updateReviewInfo} className="space-y-4">
+          <input type="hidden" name="deal_id" value={id} />
+          <label className="flex items-center gap-2 text-sm text-neutral-300 cursor-pointer">
+            <input
+              type="checkbox"
+              name="account_review_required"
+              defaultChecked={!!deal.account_review_required}
+              className="accent-neutral-300"
+            />
+            アカウント審査 有無
+          </label>
+          <div>
+            <label className="block text-sm font-medium text-neutral-300 mb-1">上限件数</label>
+            <input
+              type="number"
+              name="max_count"
+              defaultValue={deal.max_count ?? ''}
+              className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-neutral-500"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-neutral-300 mb-1">承認条件</label>
+            <textarea
+              name="approval_condition"
+              rows={2}
+              defaultValue={deal.approval_condition ?? ''}
+              className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-neutral-500 resize-none"
+            />
+          </div>
+          <button
+            type="submit"
+            className="px-4 py-2 bg-neutral-700 text-white rounded-lg text-sm font-medium hover:bg-neutral-600 transition-colors"
+          >
+            保存する
+          </button>
+        </form>
       </div>
 
       <div className="bg-neutral-900 rounded-xl border border-neutral-800 p-6">
