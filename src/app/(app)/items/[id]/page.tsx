@@ -1,7 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { updateItemField, deleteItem } from '../actions'
+import { updateItemField, deleteItem, linkItemMaterial, unlinkItemMaterial } from '../actions'
 import TranscribeUpload from './TranscribeUpload'
 
 export default async function ItemDetailPage({ params }: { params: Promise<{ id: string }> }) {
@@ -10,6 +10,16 @@ export default async function ItemDetailPage({ params }: { params: Promise<{ id:
 
   const { data: item } = await supabase.from('items').select('*').eq('id', id).single()
   if (!item) notFound()
+
+  const [{ data: usedMaterials }, { data: allMaterials }] = await Promise.all([
+    supabase.from('item_materials').select('id,materials(id,title,file_url)').eq('item_id', id),
+    supabase.from('materials').select('id,title').order('title'),
+  ])
+
+  type UsedMaterialRow = { id: string; materials: { id: string; title: string; file_url: string | null } | null }
+  const usedMaterialRows = (usedMaterials ?? []) as unknown as UsedMaterialRow[]
+  const usedMaterialIds = new Set(usedMaterialRows.map(r => r.materials?.id).filter(Boolean))
+  const availableMaterials = (allMaterials ?? []).filter(m => !usedMaterialIds.has(m.id))
 
   // 最新スナップショット（xlsxインポートデータ）
   const { data: snapshot } = await supabase
@@ -47,6 +57,28 @@ export default async function ItemDetailPage({ params }: { params: Promise<{ id:
             </a>
           )}
         </div>
+      </div>
+
+      {/* 使用素材 */}
+      <div className="bg-neutral-900 rounded-xl border border-neutral-800 p-6 mb-5">
+        <h2 className="font-semibold text-neutral-200 mb-4">使用素材</h2>
+
+        {usedMaterialRows.length > 0 ? (
+          <div className="space-y-2 mb-5">
+            {usedMaterialRows.map(r => (
+              <div key={r.id} className="flex items-center justify-between px-3 py-2 border border-neutral-800 rounded-lg">
+                <span className="text-sm text-white truncate">{r.materials?.title ?? '(削除済み素材)'}</span>
+                <UnlinkMaterialButton itemId={id} linkId={r.id} />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p className="text-neutral-500 text-sm mb-5">使用素材はまだ紐付けられていません</p>
+        )}
+
+        {availableMaterials.length > 0 && (
+          <LinkMaterialForm itemId={id} materials={availableMaterials} />
+        )}
       </div>
 
       {/* 台本 */}
@@ -216,6 +248,44 @@ function SaveNumber({ itemId, field, defaultValue }: {
       <button type="submit" className="px-2 py-1.5 bg-neutral-800 hover:bg-neutral-700 text-neutral-400 rounded-lg text-xs transition-colors">
         保存
       </button>
+    </form>
+  )
+}
+
+function LinkMaterialForm({ itemId, materials }: { itemId: string; materials: { id: string; title: string }[] }) {
+  async function link(formData: FormData) {
+    'use server'
+    const materialId = formData.get('material_id') as string
+    await linkItemMaterial(itemId, materialId)
+  }
+  return (
+    <form action={link} className="flex gap-2">
+      <select
+        name="material_id"
+        required
+        defaultValue=""
+        className="flex-1 px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+      >
+        <option value="" disabled>素材を選択</option>
+        {materials.map(m => (
+          <option key={m.id} value={m.id}>{m.title}</option>
+        ))}
+      </select>
+      <button type="submit" className="px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors whitespace-nowrap">
+        紐付け
+      </button>
+    </form>
+  )
+}
+
+function UnlinkMaterialButton({ itemId, linkId }: { itemId: string; linkId: string }) {
+  async function unlink() {
+    'use server'
+    await unlinkItemMaterial(itemId, linkId)
+  }
+  return (
+    <form action={unlink}>
+      <button type="submit" className="text-xs text-red-400 hover:text-red-300">解除</button>
     </form>
   )
 }

@@ -33,3 +33,16 @@ export async function deleteItem(id: string) {
   revalidatePath('/items')
   redirect('/items')
 }
+
+export async function linkItemMaterial(itemId: string, materialId: string) {
+  if (!materialId) return
+  const supabase = await createClient()
+  await supabase.from('item_materials').insert({ item_id: itemId, material_id: materialId })
+  revalidatePath(`/items/${itemId}`)
+}
+
+export async function unlinkItemMaterial(itemId: string, linkId: string) {
+  const supabase = await createClient()
+  await supabase.from('item_materials').delete().eq('id', linkId)
+  revalidatePath(`/items/${itemId}`)
+}
