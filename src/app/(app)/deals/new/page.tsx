@@ -31,6 +31,7 @@ async function createDeal(formData: FormData) {
   }
 
   const unitPrice = formData.get('unit_price') as string
+  const maxCount = formData.get('max_count') as string
 
   const { data: deal } = await supabase
     .from('deals')
@@ -40,6 +41,9 @@ async function createDeal(formData: FormData) {
       unit_price: unitPrice || null,
       characteristics: (formData.get('characteristics') as string) || null,
       selection_rationale: (formData.get('selection_rationale') as string) || null,
+      account_review_required: formData.get('account_review_required') === 'on',
+      max_count: maxCount ? Number(maxCount) : null,
+      approval_condition: (formData.get('approval_condition') as string) || null,
       notes: (formData.get('notes') as string) || null,
     })
     .select('id')
@@ -105,6 +109,30 @@ export default function NewDealPage() {
             rows={3}
             className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
           />
+        </div>
+
+        <div className="border border-neutral-800 rounded-lg p-4 space-y-4">
+          <p className="text-sm font-medium text-neutral-300">アカウント審査</p>
+          <label className="flex items-center gap-2 text-sm text-neutral-300 cursor-pointer">
+            <input type="checkbox" name="account_review_required" className="accent-neutral-300" />
+            アカウント審査 有無
+          </label>
+          <div>
+            <label className="block text-sm font-medium text-neutral-300 mb-1">上限件数</label>
+            <input
+              type="number"
+              name="max_count"
+              className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-neutral-500"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-neutral-300 mb-1">承認条件</label>
+            <textarea
+              name="approval_condition"
+              rows={2}
+              className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-neutral-500 resize-none"
+            />
+          </div>
         </div>
 
         <div>
