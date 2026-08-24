@@ -43,7 +43,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             <p className="text-white font-bold text-base">tik-data</p>
           </div>
           <button
-            className="lg:hidden ml-2 shrink-0 text-neutral-500 hover:text-white p-1 rounded"
+            className="lg:hidden ml-2 shrink-0 text-neutral-500 hover:text-white p-3 -m-1 rounded"
             onClick={() => setOpen(false)}
             aria-label="メニューを閉じる"
           >
@@ -59,7 +59,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               key={href}
               href={href}
               onClick={() => setOpen(false)}
-              className="flex items-center gap-3 px-3 py-2 rounded-lg text-neutral-400 hover:bg-white/10 hover:text-white text-sm transition-colors"
+              className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-neutral-400 hover:bg-white/10 hover:text-white text-sm transition-colors"
             >
               <span>{icon}</span>
               {label}
@@ -75,7 +75,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         <header className="lg:hidden flex items-center gap-3 px-4 py-3 bg-black border-b border-neutral-800 shrink-0">
           <button
             onClick={() => setOpen(true)}
-            className="text-white p-1 -ml-1 hover:bg-white/10 rounded"
+            className="text-white p-3 -ml-2 hover:bg-white/10 rounded"
             aria-label="メニューを開く"
           >
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
