@@ -27,7 +27,7 @@ export default async function DevicesPage() {
         </div>
         <Link
           href="/devices/new"
-          className="px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors"
+          className="px-4 py-2 bg-neutral-700 text-white rounded-lg text-sm font-medium hover:bg-neutral-600 transition-colors"
         >
           + 追加
         </Link>
@@ -39,7 +39,7 @@ export default async function DevicesPage() {
           <p className="text-neutral-400 font-medium">端末がまだ登録されていません</p>
           <Link
             href="/devices/new"
-            className="inline-block mt-4 px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700"
+            className="inline-block mt-4 px-4 py-2 bg-neutral-700 text-white rounded-lg text-sm font-medium hover:bg-neutral-600"
           >
             最初の端末を追加
           </Link>
@@ -58,7 +58,7 @@ export default async function DevicesPage() {
                   <p className="text-neutral-500 text-sm mt-1">{d.members?.name ?? '担当者未設定'}</p>
                 </div>
                 {d.owner_type && (
-                  <span className="inline-block px-2 py-0.5 bg-indigo-500/10 text-indigo-400 rounded text-xs font-medium shrink-0">
+                  <span className="inline-block px-2 py-0.5 bg-neutral-500/10 text-neutral-300 rounded text-xs font-medium shrink-0">
                     {d.owner_type === 'personal' ? '個人端末' : d.owner_type === 'company' ? '会社支給' : d.owner_type}
                   </span>
                 )}

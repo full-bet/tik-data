@@ -93,7 +93,7 @@ export default async function ItemDetailPage({ params }: { params: Promise<{ id:
             />
           </div>
           {item.video_url && (
-            <a href={item.video_url} target="_blank" rel="noopener noreferrer" className="inline-block text-xs text-indigo-400 hover:underline">
+            <a href={item.video_url} target="_blank" rel="noopener noreferrer" className="inline-block text-xs text-neutral-300 hover:underline">
               TikTokで見る →
             </a>
           )}
@@ -129,7 +129,7 @@ export default async function ItemDetailPage({ params }: { params: Promise<{ id:
         {usedAiToolRows.length > 0 ? (
           <div className="flex flex-wrap gap-2 mb-5">
             {usedAiToolRows.map(r => (
-              <span key={r.id} className="inline-flex items-center gap-2 px-3 py-1.5 bg-indigo-500/10 text-indigo-400 rounded-lg text-xs font-medium">
+              <span key={r.id} className="inline-flex items-center gap-2 px-3 py-1.5 bg-neutral-500/10 text-neutral-300 rounded-lg text-xs font-medium">
                 {r.ai_tools?.name ?? '(削除済み)'}
                 <UnlinkAiToolButton itemId={id} linkId={r.id} />
               </span>
@@ -181,9 +181,9 @@ export default async function ItemDetailPage({ params }: { params: Promise<{ id:
               { label: 'GMV',          value: `¥${Number(snapshot.gmv ?? 0).toLocaleString()}` },
               { label: 'Direct GMV',   value: `¥${Number(snapshot.direct_gmv ?? 0).toLocaleString()}` },
             ].map(({ label, value }) => (
-              <div key={label} className="bg-indigo-500/10 rounded-lg p-3">
-                <p className="text-xs text-indigo-400 mb-0.5">{label}</p>
-                <p className="text-lg font-bold text-indigo-300">{value}</p>
+              <div key={label} className="bg-neutral-500/10 rounded-lg p-3">
+                <p className="text-xs text-neutral-300 mb-0.5">{label}</p>
+                <p className="text-lg font-bold text-neutral-300">{value}</p>
               </div>
             ))}
           </div>
@@ -195,7 +195,7 @@ export default async function ItemDetailPage({ params }: { params: Promise<{ id:
         <h2 className="font-semibold text-neutral-200 mb-5">指標（手動入力）</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <div>
-            <p className="text-xs font-semibold text-indigo-400 uppercase tracking-wider mb-3">初動 72h</p>
+            <p className="text-xs font-semibold text-neutral-300 uppercase tracking-wider mb-3">初動 72h</p>
             <div className="space-y-3">
               {[
                 { field: 'initial_views',            label: '再生数' },
@@ -256,7 +256,7 @@ function SaveField({ itemId, field, label, defaultValue, placeholder, type = 'te
           name={field}
           defaultValue={defaultValue}
           placeholder={placeholder}
-          className="flex-1 px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          className="flex-1 px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm text-white focus:outline-none focus:ring-2 focus:ring-neutral-500"
         />
         <button type="submit" className="px-3 py-2 bg-neutral-800 hover:bg-neutral-700 text-neutral-400 rounded-lg text-xs transition-colors">
           保存
@@ -281,7 +281,7 @@ function SaveSelect({ itemId, field, label, defaultValue, options }: {
         <select
           name={field}
           defaultValue={defaultValue}
-          className="flex-1 min-w-0 px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          className="flex-1 min-w-0 px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-neutral-500"
         >
           <option value="">未設定</option>
           {options.map(o => (
@@ -313,7 +313,7 @@ function LinkAiToolForm({ itemId, availableTools }: { itemId: string; availableT
         <select
           name="ai_tool_id"
           defaultValue=""
-          className="flex-1 px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          className="flex-1 px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-neutral-500"
         >
           <option value="">既存ツールを選択</option>
           {availableTools.map(t => (
@@ -324,9 +324,9 @@ function LinkAiToolForm({ itemId, availableTools }: { itemId: string; availableT
       <input
         name="new_tool_name"
         placeholder="新しいツール名を入力"
-        className="flex-1 px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        className="flex-1 px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-neutral-500"
       />
-      <button type="submit" className="px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors whitespace-nowrap">
+      <button type="submit" className="px-4 py-2 bg-neutral-700 text-white rounded-lg text-sm font-medium hover:bg-neutral-600 transition-colors whitespace-nowrap">
         追加
       </button>
     </form>
@@ -340,7 +340,7 @@ function UnlinkAiToolButton({ itemId, linkId }: { itemId: string; linkId: string
   }
   return (
     <form action={unlink} className="inline">
-      <button type="submit" className="text-indigo-300 hover:text-white">×</button>
+      <button type="submit" className="text-neutral-300 hover:text-white">×</button>
     </form>
   )
 }
@@ -360,7 +360,7 @@ function SaveTextarea({ itemId, field, defaultValue, placeholder }: {
         defaultValue={defaultValue}
         placeholder={placeholder}
         rows={10}
-        className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
+        className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm text-white focus:outline-none focus:ring-2 focus:ring-neutral-500 resize-none"
       />
       <button type="submit" className="mt-2 px-4 py-1.5 bg-neutral-900 text-white rounded-lg text-xs font-medium hover:bg-white/10 transition-colors">
         保存
@@ -383,7 +383,7 @@ function SaveNumber({ itemId, field, defaultValue }: {
         type="number"
         name={field}
         defaultValue={defaultValue}
-        className="w-28 px-2 py-1.5 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm text-white text-right focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        className="w-28 px-2 py-1.5 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm text-white text-right focus:outline-none focus:ring-2 focus:ring-neutral-500"
       />
       <button type="submit" className="px-2 py-1.5 bg-neutral-800 hover:bg-neutral-700 text-neutral-400 rounded-lg text-xs transition-colors">
         保存
@@ -404,14 +404,14 @@ function LinkMaterialForm({ itemId, materials }: { itemId: string; materials: { 
         name="material_id"
         required
         defaultValue=""
-        className="flex-1 px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        className="flex-1 px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-neutral-500"
       >
         <option value="" disabled>素材を選択</option>
         {materials.map(m => (
           <option key={m.id} value={m.id}>{m.title}</option>
         ))}
       </select>
-      <button type="submit" className="px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors whitespace-nowrap">
+      <button type="submit" className="px-4 py-2 bg-neutral-700 text-white rounded-lg text-sm font-medium hover:bg-neutral-600 transition-colors whitespace-nowrap">
         紐付け
       </button>
     </form>

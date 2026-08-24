@@ -18,7 +18,7 @@ export default async function ScriptsPage() {
         </div>
         <Link
           href="/scripts/new"
-          className="px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors"
+          className="px-4 py-2 bg-neutral-700 text-white rounded-lg text-sm font-medium hover:bg-neutral-600 transition-colors"
         >
           + 台本を作成
         </Link>
@@ -30,7 +30,7 @@ export default async function ScriptsPage() {
           <p className="text-neutral-400 font-medium">台本がまだありません</p>
           <Link
             href="/scripts/new"
-            className="inline-block mt-4 px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700"
+            className="inline-block mt-4 px-4 py-2 bg-neutral-700 text-white rounded-lg text-sm font-medium hover:bg-neutral-600"
           >
             最初の台本を作成
           </Link>
@@ -41,7 +41,7 @@ export default async function ScriptsPage() {
             <Link
               key={script.id}
               href={`/scripts/${script.id}`}
-              className="bg-neutral-900 rounded-xl border border-neutral-800 p-5 hover:border-indigo-500/60 hover:shadow-sm transition-all flex items-start justify-between"
+              className="bg-neutral-900 rounded-xl border border-neutral-800 p-5 hover:border-neutral-500/60 hover:shadow-sm transition-all flex items-start justify-between"
             >
               <div className="flex-1 min-w-0">
                 <p className="font-semibold text-white">{script.title}</p>
@@ -49,7 +49,7 @@ export default async function ScriptsPage() {
                   <p className="text-neutral-500 text-sm mt-1 truncate">フック: {script.hook}</p>
                 )}
                 {script.category && (
-                  <span className="inline-block mt-2 px-2 py-0.5 bg-indigo-500/10 text-indigo-400 rounded text-xs font-medium">
+                  <span className="inline-block mt-2 px-2 py-0.5 bg-neutral-500/10 text-neutral-300 rounded text-xs font-medium">
                     {script.category}
                   </span>
                 )}

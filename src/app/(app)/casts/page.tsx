@@ -30,7 +30,7 @@ export default async function CastsPage() {
         </div>
         <Link
           href="/casts/new"
-          className="px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors"
+          className="px-4 py-2 bg-neutral-700 text-white rounded-lg text-sm font-medium hover:bg-neutral-600 transition-colors"
         >
           + 追加
         </Link>
@@ -42,7 +42,7 @@ export default async function CastsPage() {
           <p className="text-neutral-400 font-medium">キャストがまだ登録されていません</p>
           <Link
             href="/casts/new"
-            className="inline-block mt-4 px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700"
+            className="inline-block mt-4 px-4 py-2 bg-neutral-700 text-white rounded-lg text-sm font-medium hover:bg-neutral-600"
           >
             最初のキャストを追加
           </Link>
@@ -63,7 +63,7 @@ export default async function CastsPage() {
                   </p>
                 </div>
                 {c.contact_method && (
-                  <span className="inline-block px-2 py-0.5 bg-indigo-500/10 text-indigo-400 rounded text-xs font-medium shrink-0">
+                  <span className="inline-block px-2 py-0.5 bg-neutral-500/10 text-neutral-300 rounded text-xs font-medium shrink-0">
                     連絡: {c.contact_method}
                   </span>
                 )}

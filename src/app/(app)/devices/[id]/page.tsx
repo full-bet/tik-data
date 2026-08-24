@@ -83,7 +83,7 @@ export default async function DeviceDetailPage({ params }: { params: Promise<{ i
               name="auth_email_id"
               required
               defaultValue=""
-              className="flex-1 px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="flex-1 px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-neutral-500"
             >
               <option value="" disabled>認証メアドを選択</option>
               {availableEmails.map(e => (
@@ -92,14 +92,14 @@ export default async function DeviceDetailPage({ params }: { params: Promise<{ i
             </select>
             <button
               type="submit"
-              className="px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors whitespace-nowrap"
+              className="px-4 py-2 bg-neutral-700 text-white rounded-lg text-sm font-medium hover:bg-neutral-600 transition-colors whitespace-nowrap"
             >
               紐付け
             </button>
           </form>
         ) : (
           <p className="text-neutral-500 text-xs">
-            紐付け可能な認証メアドがありません。<Link href="/auth-emails/new" className="text-indigo-400 hover:underline">先に追加してください</Link>
+            紐付け可能な認証メアドがありません。<Link href="/auth-emails/new" className="text-neutral-300 hover:underline">先に追加してください</Link>
           </p>
         )}
       </div>

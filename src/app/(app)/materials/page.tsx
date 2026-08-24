@@ -88,7 +88,7 @@ export default async function MaterialsPage({
         </div>
         <Link
           href="/materials/new"
-          className="px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors"
+          className="px-4 py-2 bg-neutral-700 text-white rounded-lg text-sm font-medium hover:bg-neutral-600 transition-colors"
         >
           + 追加
         </Link>
@@ -98,7 +98,7 @@ export default async function MaterialsPage({
         <select
           name="cast"
           defaultValue={castFilter ?? ''}
-          className="px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          className="px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-neutral-500"
         >
           <option value="">キャストで絞り込み（すべて）</option>
           {castOptionRows.map(c => (
@@ -108,7 +108,7 @@ export default async function MaterialsPage({
         <select
           name="deal"
           defaultValue={dealFilter ?? ''}
-          className="px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          className="px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-neutral-500"
         >
           <option value="">商材で絞り込み（すべて）</option>
           {(dealOptions ?? []).map(d => (
@@ -139,7 +139,7 @@ export default async function MaterialsPage({
           </p>
           <Link
             href="/materials/new"
-            className="inline-block mt-4 px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700"
+            className="inline-block mt-4 px-4 py-2 bg-neutral-700 text-white rounded-lg text-sm font-medium hover:bg-neutral-600"
           >
             最初の素材を追加
           </Link>
@@ -157,7 +157,7 @@ export default async function MaterialsPage({
                 </div>
                 <div className="flex gap-1.5 flex-wrap justify-end shrink-0">
                   {(tagsByMaterial.get(m.id) ?? []).map((name, i) => (
-                    <span key={i} className="inline-block px-2 py-0.5 bg-indigo-500/10 text-indigo-400 rounded text-xs font-medium">
+                    <span key={i} className="inline-block px-2 py-0.5 bg-neutral-500/10 text-neutral-300 rounded text-xs font-medium">
                       {name}
                     </span>
                   ))}
@@ -168,7 +168,7 @@ export default async function MaterialsPage({
                   href={m.file_url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-block text-indigo-400 text-xs mt-2 hover:underline truncate max-w-full"
+                  className="inline-block text-neutral-300 text-xs mt-2 hover:underline truncate max-w-full"
                 >
                   {m.file_url}
                 </a>

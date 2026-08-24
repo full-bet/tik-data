@@ -36,7 +36,7 @@ export default async function CompetitorsPage() {
             <Link
               key={c.id}
               href={`/competitors/${c.id}`}
-              className="flex gap-4 bg-neutral-900 rounded-xl border border-neutral-800 p-4 hover:border-indigo-500/60 hover:shadow-sm transition-all"
+              className="flex gap-4 bg-neutral-900 rounded-xl border border-neutral-800 p-4 hover:border-neutral-500/60 hover:shadow-sm transition-all"
             >
               {c.thumbnail_url ? (
                 <img src={c.thumbnail_url} alt="" className="w-16 h-16 rounded-lg object-cover shrink-0" />

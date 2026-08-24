@@ -51,7 +51,7 @@ export default async function CompetitorDetailPage({
               href={comp.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-xs text-indigo-400 hover:underline mt-1 inline-block"
+              className="text-xs text-neutral-300 hover:underline mt-1 inline-block"
             >
               TikTokで見る →
             </a>
@@ -74,9 +74,9 @@ export default async function CompetitorDetailPage({
           {comp.ai_summary && (
             <div className="mt-5 space-y-4">
               {/* サマリー */}
-              <div className="bg-indigo-500/10 rounded-lg p-4">
-                <p className="text-xs font-semibold text-indigo-400 mb-1">まとめ</p>
-                <p className="text-sm text-indigo-900">{comp.ai_summary}</p>
+              <div className="bg-neutral-500/10 rounded-lg p-4">
+                <p className="text-xs font-semibold text-neutral-300 mb-1">まとめ</p>
+                <p className="text-sm text-neutral-300">{comp.ai_summary}</p>
               </div>
 
               {/* フック / CTA */}
@@ -140,7 +140,7 @@ function NotesForm({ competitorId, defaultValue }: { competitorId: string; defau
         defaultValue={defaultValue}
         rows={4}
         placeholder="気になった点、参考にしたい表現など..."
-        className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
+        className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm text-white focus:outline-none focus:ring-2 focus:ring-neutral-500 resize-none"
       />
       <button
         type="submit"

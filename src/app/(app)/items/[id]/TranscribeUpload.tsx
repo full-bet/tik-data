@@ -54,12 +54,12 @@ export default function TranscribeUpload({ itemId }: { itemId: string }) {
         onClick={() => inputRef.current?.click()}
         className={`border-2 border-dashed rounded-xl p-6 text-center cursor-pointer transition-colors ${
           status === 'uploading'
-            ? 'border-indigo-500/40 bg-indigo-500/10'
+            ? 'border-neutral-500/40 bg-neutral-500/10'
             : status === 'done'
             ? 'border-green-500/40 bg-green-500/10'
             : status === 'error'
             ? 'border-red-500/40 bg-red-500/10'
-            : 'border-neutral-800 hover:border-indigo-500/60 hover:bg-white/5'
+            : 'border-neutral-800 hover:border-neutral-500/60 hover:bg-white/5'
         }`}
       >
         <input
@@ -72,8 +72,8 @@ export default function TranscribeUpload({ itemId }: { itemId: string }) {
 
         {status === 'uploading' ? (
           <div className="space-y-2">
-            <div className="w-6 h-6 border-2 border-indigo-500/60 border-t-transparent rounded-full animate-spin mx-auto" />
-            <p className="text-sm text-indigo-400">文字起こし中...</p>
+            <div className="w-6 h-6 border-2 border-neutral-500/60 border-t-transparent rounded-full animate-spin mx-auto" />
+            <p className="text-sm text-neutral-300">文字起こし中...</p>
           </div>
         ) : status === 'done' ? (
           <div className="space-y-1">

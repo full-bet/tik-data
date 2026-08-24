@@ -135,14 +135,14 @@ export default async function AnalyticsPage() {
               <h2 className="font-semibold text-neutral-300 mb-4">再生数ランキング（最新インポート）</h2>
               <RankingChart data={rankingData} />
               <div className="overflow-x-auto">
-              <table className="w-full text-xs mt-4">
+              <table className="w-full min-w-[480px] text-xs mt-4">
                 <thead>
                   <tr className="text-left text-neutral-500 border-b border-neutral-800">
-                    <th className="pb-2 font-medium">#</th>
-                    <th className="pb-2 font-medium">タイトル</th>
-                    <th className="pb-2 text-right font-medium">再生</th>
-                    <th className="pb-2 text-right font-medium">いいね</th>
-                    <th className="pb-2 text-right font-medium">EG率</th>
+                    <th className="pb-2 font-medium whitespace-nowrap">#</th>
+                    <th className="pb-2 font-medium whitespace-nowrap">タイトル</th>
+                    <th className="pb-2 text-right font-medium whitespace-nowrap">再生</th>
+                    <th className="pb-2 text-right font-medium whitespace-nowrap">いいね</th>
+                    <th className="pb-2 text-right font-medium whitespace-nowrap">EG率</th>
                   </tr>
                 </thead>
                 <tbody>

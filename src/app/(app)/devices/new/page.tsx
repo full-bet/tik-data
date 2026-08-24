@@ -47,7 +47,7 @@ export default async function NewDevicePage() {
             name="name"
             required
             placeholder="例: そらi15, そらiXR"
-            className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-neutral-500"
           />
         </div>
 
@@ -57,7 +57,7 @@ export default async function NewDevicePage() {
             <select
               name="owner_type"
               defaultValue=""
-              className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-neutral-500"
             >
               <option value="">未指定</option>
               <option value="personal">個人端末</option>
@@ -69,7 +69,7 @@ export default async function NewDevicePage() {
             <select
               name="assigned_member_id"
               defaultValue=""
-              className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-neutral-500"
             >
               <option value="">未指定</option>
               {(members ?? []).map(m => (
@@ -85,14 +85,14 @@ export default async function NewDevicePage() {
             name="usage_note"
             rows={2}
             placeholder="ログイン用途、少しでも使う端末、等"
-            className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
+            className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-neutral-500 resize-none"
           />
         </div>
 
         <div className="flex gap-3 pt-2">
           <button
             type="submit"
-            className="px-6 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors"
+            className="px-6 py-2 bg-neutral-700 text-white rounded-lg text-sm font-medium hover:bg-neutral-600 transition-colors"
           >
             追加する
           </button>

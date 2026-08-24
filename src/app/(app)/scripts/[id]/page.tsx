@@ -103,7 +103,7 @@ export default async function ScriptDetailPage({ params }: { params: Promise<{ i
               name="title"
               defaultValue={script.title}
               required
-              className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-neutral-500"
             />
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -112,7 +112,7 @@ export default async function ScriptDetailPage({ params }: { params: Promise<{ i
               <input
                 name="hook"
                 defaultValue={script.hook ?? ''}
-                className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-neutral-500"
               />
             </div>
             <div>
@@ -120,7 +120,7 @@ export default async function ScriptDetailPage({ params }: { params: Promise<{ i
               <input
                 name="category"
                 defaultValue={script.category ?? ''}
-                className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-neutral-500"
               />
             </div>
           </div>
@@ -130,13 +130,13 @@ export default async function ScriptDetailPage({ params }: { params: Promise<{ i
               name="content"
               defaultValue={script.content ?? ''}
               rows={8}
-              className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
+              className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-neutral-500 resize-none"
             />
           </div>
           <div className="flex items-center justify-between pt-2">
             <button
               type="submit"
-              className="px-5 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors"
+              className="px-5 py-2 bg-neutral-700 text-white rounded-lg text-sm font-medium hover:bg-neutral-600 transition-colors"
             >
               保存する
             </button>
@@ -160,7 +160,7 @@ export default async function ScriptDetailPage({ params }: { params: Promise<{ i
                 <select
                   name="account_id"
                   required
-                  className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-neutral-500"
                 >
                   {accounts.map(a => (
                     <option key={a.id} value={a.id}>
@@ -174,7 +174,7 @@ export default async function ScriptDetailPage({ params }: { params: Promise<{ i
                 <input
                   type="datetime-local"
                   name="posted_at"
-                  className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-neutral-500"
                 />
               </div>
             </div>
@@ -185,7 +185,7 @@ export default async function ScriptDetailPage({ params }: { params: Promise<{ i
               <input
                 name="video_input"
                 required
-                className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-neutral-500"
                 placeholder="https://www.tiktok.com/@user/video/1234567890 または 1234567890"
               />
             </div>
@@ -211,15 +211,15 @@ export default async function ScriptDetailPage({ params }: { params: Promise<{ i
           </div>
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full text-sm">
+            <table className="w-full min-w-[700px] text-sm">
               <thead>
                 <tr className="border-b border-neutral-800 bg-black">
-                  <th className="text-left px-6 py-3 text-neutral-500 font-medium">動画ID</th>
-                  <th className="text-left px-4 py-3 text-neutral-500 font-medium">投稿日</th>
-                  <th className="text-right px-4 py-3 text-neutral-500 font-medium">初動72h再生</th>
-                  <th className="text-right px-4 py-3 text-neutral-500 font-medium">初動いいね</th>
-                  <th className="text-right px-4 py-3 text-neutral-500 font-medium">累計再生</th>
-                  <th className="text-right px-4 py-3 text-neutral-500 font-medium">累計いいね</th>
+                  <th className="text-left px-6 py-3 text-neutral-500 font-medium whitespace-nowrap">動画ID</th>
+                  <th className="text-left px-4 py-3 text-neutral-500 font-medium whitespace-nowrap">投稿日</th>
+                  <th className="text-right px-4 py-3 text-neutral-500 font-medium whitespace-nowrap">初動72h再生</th>
+                  <th className="text-right px-4 py-3 text-neutral-500 font-medium whitespace-nowrap">初動いいね</th>
+                  <th className="text-right px-4 py-3 text-neutral-500 font-medium whitespace-nowrap">累計再生</th>
+                  <th className="text-right px-4 py-3 text-neutral-500 font-medium whitespace-nowrap">累計いいね</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-neutral-800">
@@ -230,7 +230,7 @@ export default async function ScriptDetailPage({ params }: { params: Promise<{ i
                         href={`https://www.tiktok.com/@_/video/${item.tiktok_video_id}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-indigo-400 hover:underline font-mono text-xs"
+                        className="text-neutral-300 hover:underline font-mono text-xs"
                       >
                         {item.tiktok_video_id}
                       </a>

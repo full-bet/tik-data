@@ -27,7 +27,7 @@ export default async function DealsPage() {
         </div>
         <Link
           href="/deals/new"
-          className="px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors"
+          className="px-4 py-2 bg-neutral-700 text-white rounded-lg text-sm font-medium hover:bg-neutral-600 transition-colors"
         >
           + 追加
         </Link>
@@ -39,7 +39,7 @@ export default async function DealsPage() {
           <p className="text-neutral-400 font-medium">商材がまだ登録されていません</p>
           <Link
             href="/deals/new"
-            className="inline-block mt-4 px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700"
+            className="inline-block mt-4 px-4 py-2 bg-neutral-700 text-white rounded-lg text-sm font-medium hover:bg-neutral-600"
           >
             最初の商材を追加
           </Link>
@@ -58,7 +58,7 @@ export default async function DealsPage() {
                   <p className="text-neutral-500 text-sm mt-1">{d.clients?.name ?? '提供元法人未設定'}</p>
                 </div>
                 {d.unit_price && (
-                  <span className="inline-block px-2 py-0.5 bg-indigo-500/10 text-indigo-400 rounded text-xs font-medium shrink-0">
+                  <span className="inline-block px-2 py-0.5 bg-neutral-500/10 text-neutral-300 rounded text-xs font-medium shrink-0">
                     単価 {d.unit_price}
                   </span>
                 )}

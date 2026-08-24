@@ -43,7 +43,7 @@ export default function UploadForm() {
       </p>
 
       <div
-        className="border-2 border-dashed border-neutral-700 rounded-lg p-8 text-center cursor-pointer hover:border-indigo-500/70 hover:bg-indigo-500/100/10 transition-colors"
+        className="border-2 border-dashed border-neutral-700 rounded-lg p-8 text-center cursor-pointer hover:border-neutral-500 hover:bg-white/5 transition-colors"
         onClick={() => inputRef.current?.click()}
         onDragOver={e => e.preventDefault()}
         onDrop={e => {
@@ -53,7 +53,7 @@ export default function UploadForm() {
         }}
       >
         {status === 'uploading' ? (
-          <p className="text-sm text-indigo-400 animate-pulse">処理中...</p>
+          <p className="text-sm text-neutral-300 animate-pulse">処理中...</p>
         ) : (
           <>
             <p className="text-3xl mb-2">📂</p>

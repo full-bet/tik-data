@@ -27,7 +27,7 @@ export default async function MembersPage() {
         </div>
         <Link
           href="/members/new"
-          className="px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors"
+          className="px-4 py-2 bg-neutral-700 text-white rounded-lg text-sm font-medium hover:bg-neutral-600 transition-colors"
         >
           + 追加
         </Link>
@@ -39,7 +39,7 @@ export default async function MembersPage() {
           <p className="text-neutral-400 font-medium">メンバーがまだ登録されていません</p>
           <Link
             href="/members/new"
-            className="inline-block mt-4 px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700"
+            className="inline-block mt-4 px-4 py-2 bg-neutral-700 text-white rounded-lg text-sm font-medium hover:bg-neutral-600"
           >
             最初のメンバーを追加
           </Link>
@@ -50,7 +50,7 @@ export default async function MembersPage() {
             <Link
               key={m.id}
               href={`/members/${m.id}`}
-              className="block bg-neutral-900 rounded-xl border border-neutral-800 p-5 hover:border-indigo-500/40 hover:shadow-sm transition-all"
+              className="block bg-neutral-900 rounded-xl border border-neutral-800 p-5 hover:border-neutral-500/40 hover:shadow-sm transition-all"
             >
               <div className="flex items-start justify-between">
                 <p className="font-semibold text-white">{m.name}</p>
@@ -63,7 +63,7 @@ export default async function MembersPage() {
                     (m.member_roles ?? []).map((r, i) => (
                       <span
                         key={i}
-                        className="inline-block px-2 py-0.5 bg-indigo-500/10 text-indigo-400 rounded text-xs font-medium"
+                        className="inline-block px-2 py-0.5 bg-neutral-500/10 text-neutral-300 rounded text-xs font-medium"
                       >
                         {ROLE_LABELS[r.role] ?? r.role}
                       </span>

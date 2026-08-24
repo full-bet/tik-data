@@ -78,7 +78,7 @@ function EditableNumberCell({
           onFocus={e => e.target.select()}
           onBlur={handleBlur}
           onKeyDown={handleKeyDown}
-          className="w-full text-right bg-indigo-500/10 border border-indigo-500/60 rounded px-1 py-1.5 text-sm text-white focus:outline-none"
+          className="w-full text-right bg-neutral-500/10 border border-neutral-500/60 rounded px-1 py-1.5 text-sm text-white focus:outline-none"
         />
       ) : (
         <span className="block py-1.5 px-1 text-sm text-neutral-300 cursor-pointer group-hover:bg-white/5 rounded">
@@ -111,19 +111,19 @@ export default function ItemsTable({ items: initialItems }: { items: Item[] }) {
 
   return (
     <div className="overflow-x-auto">
-      <table className="w-full text-sm border-collapse">
+      <table className="w-full min-w-[880px] text-sm border-collapse">
         <thead>
           <tr className="bg-neutral-800 border-y border-neutral-800">
-            <th className="text-left px-4 py-2.5 text-xs font-semibold text-neutral-500 w-56 sticky left-0 bg-neutral-800 z-10">
+            <th className="text-left px-4 py-2.5 text-xs font-semibold text-neutral-500 whitespace-nowrap w-56 sticky left-0 bg-neutral-800 z-10">
               動画タイトル
             </th>
-            <th className="text-left px-3 py-2.5 text-xs font-semibold text-neutral-500 w-24">カテゴリ</th>
-            <th className="text-left px-3 py-2.5 text-xs font-semibold text-neutral-500 w-24">投稿日</th>
-            <th className="text-right px-3 py-2.5 text-xs font-semibold text-indigo-400 w-20" colSpan={4}>
+            <th className="text-left px-3 py-2.5 text-xs font-semibold text-neutral-500 whitespace-nowrap w-24">カテゴリ</th>
+            <th className="text-left px-3 py-2.5 text-xs font-semibold text-neutral-500 whitespace-nowrap w-24">投稿日</th>
+            <th className="text-right px-3 py-2.5 text-xs font-semibold text-neutral-300 whitespace-nowrap w-20" colSpan={4}>
               初動 72h ▼
             </th>
             <th className="w-px bg-neutral-600" />
-            <th className="text-right px-3 py-2.5 text-xs font-semibold text-neutral-500 w-20" colSpan={4}>
+            <th className="text-right px-3 py-2.5 text-xs font-semibold text-neutral-500 whitespace-nowrap w-20" colSpan={4}>
               累計 ▼
             </th>
             <th className="w-8" />
@@ -135,8 +135,8 @@ export default function ItemsTable({ items: initialItems }: { items: Item[] }) {
             {numericFields.map(({ field, label, group }) => (
               <th
                 key={field}
-                className={`text-right px-3 py-1.5 text-xs font-medium ${
-                  group === 'initial' ? 'text-indigo-400' : 'text-neutral-500'
+                className={`text-right px-3 py-1.5 text-xs font-medium whitespace-nowrap ${
+                  group === 'initial' ? 'text-neutral-300' : 'text-neutral-500'
                 }`}
               >
                 {label}
@@ -149,7 +149,7 @@ export default function ItemsTable({ items: initialItems }: { items: Item[] }) {
         <tbody className="divide-y divide-neutral-800">
           {initialItems.length === 0 ? (
             <tr>
-              <td colSpan={14} className="text-center py-16 text-neutral-500 text-sm">
+              <td colSpan={13} className="text-center py-16 text-neutral-500 text-sm whitespace-nowrap">
                 アイテムがありません。「+ 追加」から作成してください
               </td>
             </tr>
@@ -160,7 +160,7 @@ export default function ItemsTable({ items: initialItems }: { items: Item[] }) {
                 <td className="px-4 py-0 sticky left-0 bg-neutral-900 group-hover/row:bg-black z-10 transition-colors">
                   <Link
                     href={`/items/${item.id}`}
-                    className="block py-2 font-medium text-indigo-400 hover:underline truncate max-w-[220px]"
+                    className="block py-2 font-medium text-neutral-300 hover:underline truncate max-w-[220px]"
                   >
                     {item.video_title}
                   </Link>

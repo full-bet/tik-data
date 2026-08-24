@@ -138,7 +138,7 @@ export default async function MemberDetailPage({ params }: { params: Promise<{ i
               name="name"
               required
               defaultValue={member.name}
-              className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-neutral-500"
             />
           </div>
 
@@ -155,7 +155,7 @@ export default async function MemberDetailPage({ params }: { params: Promise<{ i
                     name="roles"
                     value={r.value}
                     defaultChecked={currentRoles.has(r.value)}
-                    className="accent-indigo-600"
+                    className="accent-white"
                   />
                   {r.label}
                 </label>
@@ -169,13 +169,13 @@ export default async function MemberDetailPage({ params }: { params: Promise<{ i
               name="memo"
               rows={3}
               defaultValue={member.memo ?? ''}
-              className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
+              className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-neutral-500 resize-none"
             />
           </div>
 
           <button
             type="submit"
-            className="px-6 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors"
+            className="px-6 py-2 bg-neutral-700 text-white rounded-lg text-sm font-medium hover:bg-neutral-600 transition-colors"
           >
             保存する
           </button>
@@ -192,7 +192,7 @@ export default async function MemberDetailPage({ params }: { params: Promise<{ i
               <select
                 name="referrer_member_id"
                 defaultValue={castProfile.referrer_member_id ?? ''}
-                className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-neutral-500"
               >
                 <option value="">未指定</option>
                 {referrerOptions.map(m => (
@@ -207,7 +207,7 @@ export default async function MemberDetailPage({ params }: { params: Promise<{ i
                   type="number"
                   name="age"
                   defaultValue={castProfile.age ?? ''}
-                  className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-neutral-500"
                 />
               </div>
               <div>
@@ -215,7 +215,7 @@ export default async function MemberDetailPage({ params }: { params: Promise<{ i
                 <input
                   name="gender"
                   defaultValue={castProfile.gender ?? ''}
-                  className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-neutral-500"
                 />
               </div>
             </div>
@@ -226,7 +226,7 @@ export default async function MemberDetailPage({ params }: { params: Promise<{ i
                 name="contact_method"
                 defaultValue={castProfile.contact_method ?? ''}
                 placeholder="例: LINE、Xのdmなど"
-                className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-neutral-500"
               />
             </div>
 
@@ -236,7 +236,7 @@ export default async function MemberDetailPage({ params }: { params: Promise<{ i
                 name="exposure_range"
                 rows={2}
                 defaultValue={castProfile.exposure_range ?? ''}
-                className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
+                className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-neutral-500 resize-none"
               />
             </div>
 
@@ -246,13 +246,13 @@ export default async function MemberDetailPage({ params }: { params: Promise<{ i
                 name="ng_notes"
                 rows={2}
                 defaultValue={castProfile.ng_notes ?? ''}
-                className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
+                className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-neutral-500 resize-none"
               />
             </div>
 
             <button
               type="submit"
-              className="px-6 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors"
+              className="px-6 py-2 bg-neutral-700 text-white rounded-lg text-sm font-medium hover:bg-neutral-600 transition-colors"
             >
               保存する
             </button>
@@ -293,12 +293,12 @@ export default async function MemberDetailPage({ params }: { params: Promise<{ i
               name="url"
               required
               placeholder="写真URL（例: https://drive.google.com/...）"
-              className="flex-1 px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="flex-1 px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-neutral-500"
             />
             <select
               name="category"
               defaultValue="face"
-              className="px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-neutral-500"
             >
               {PHOTO_CATEGORY_OPTIONS.map(c => (
                 <option key={c.value} value={c.value}>{c.label}</option>
@@ -306,7 +306,7 @@ export default async function MemberDetailPage({ params }: { params: Promise<{ i
             </select>
             <button
               type="submit"
-              className="px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors whitespace-nowrap"
+              className="px-4 py-2 bg-neutral-700 text-white rounded-lg text-sm font-medium hover:bg-neutral-600 transition-colors whitespace-nowrap"
             >
               追加
             </button>

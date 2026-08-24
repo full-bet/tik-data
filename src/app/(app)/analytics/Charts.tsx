@@ -36,7 +36,7 @@ export function TrendChart({ data }: { data: TrendPoint[] }) {
           labelStyle={{ color: '#fff' }}
         />
         <Legend iconType="circle" iconSize={8} />
-        <Line type="monotone" dataKey="views" name="再生数" stroke="#6366f1" strokeWidth={2} dot={{ r: 4 }} />
+        <Line type="monotone" dataKey="views" name="再生数" stroke="#e5e5e5" strokeWidth={2} dot={{ r: 4 }} />
         <Line type="monotone" dataKey="likes" name="いいね" stroke="#f59e0b" strokeWidth={2} dot={{ r: 4 }} />
         <Line type="monotone" dataKey="new_followers" name="フォロワー増" stroke="#10b981" strokeWidth={2} dot={{ r: 4 }} />
       </LineChart>
@@ -64,7 +64,7 @@ export function RankingChart({ data }: { data: VideoRank[] }) {
           contentStyle={{ background: '#171717', border: '1px solid #27272a', borderRadius: 8, color: '#fff' }}
           labelStyle={{ color: '#fff' }}
         />
-        <Bar dataKey="views" name="再生数" fill="#6366f1" radius={[0, 4, 4, 0]} />
+        <Bar dataKey="views" name="再生数" fill="#e5e5e5" radius={[0, 4, 4, 0]} />
       </BarChart>
     </ResponsiveContainer>
   )

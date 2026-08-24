@@ -99,7 +99,7 @@ export default async function NewMaterialPage() {
                   key={t.id}
                   className="flex items-center gap-2 px-3 py-2 border border-neutral-700 rounded-lg text-sm text-neutral-300 cursor-pointer hover:bg-white/5"
                 >
-                  <input type="checkbox" name="tag_ids" value={t.id} className="accent-indigo-600" />
+                  <input type="checkbox" name="tag_ids" value={t.id} className="accent-white" />
                   {t.name}
                 </label>
               ))}
@@ -108,7 +108,7 @@ export default async function NewMaterialPage() {
           <input
             name="new_tags"
             placeholder="新しいタグをカンマ区切りで入力（例: アフリカ人素材, 屋外）"
-            className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-neutral-500"
           />
           <p className="text-neutral-500 text-xs mt-1">
             選択・入力したタグを「_」で連結してファイル名（素材名）が自動生成されます
@@ -120,7 +120,7 @@ export default async function NewMaterialPage() {
           <input
             name="file_url"
             placeholder="https://drive.google.com/..."
-            className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-neutral-500"
           />
         </div>
 
@@ -133,7 +133,7 @@ export default async function NewMaterialPage() {
                   key={c.member_id}
                   className="flex items-center gap-2 px-3 py-2 border border-neutral-700 rounded-lg text-sm text-neutral-300 cursor-pointer hover:bg-white/5"
                 >
-                  <input type="checkbox" name="cast_member_ids" value={c.member_id} className="accent-indigo-600" />
+                  <input type="checkbox" name="cast_member_ids" value={c.member_id} className="accent-white" />
                   {c.members?.name ?? c.member_id}
                 </label>
               ))}
@@ -152,7 +152,7 @@ export default async function NewMaterialPage() {
                   key={d.id}
                   className="flex items-center gap-2 px-3 py-2 border border-neutral-700 rounded-lg text-sm text-neutral-300 cursor-pointer hover:bg-white/5"
                 >
-                  <input type="checkbox" name="deal_ids" value={d.id} className="accent-indigo-600" />
+                  <input type="checkbox" name="deal_ids" value={d.id} className="accent-white" />
                   {d.name}
                 </label>
               ))}
@@ -167,14 +167,14 @@ export default async function NewMaterialPage() {
           <textarea
             name="notes"
             rows={2}
-            className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
+            className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-neutral-500 resize-none"
           />
         </div>
 
         <div className="flex gap-3 pt-2">
           <button
             type="submit"
-            className="px-6 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors"
+            className="px-6 py-2 bg-neutral-700 text-white rounded-lg text-sm font-medium hover:bg-neutral-600 transition-colors"
           >
             追加する
           </button>

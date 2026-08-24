@@ -44,12 +44,12 @@ export default function AddCompetitorForm() {
           onChange={e => setUrl(e.target.value)}
           placeholder="https://www.tiktok.com/@user/video/..."
           rows={3}
-          className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
+          className="w-full px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm text-white focus:outline-none focus:ring-2 focus:ring-neutral-500 resize-none"
         />
         <button
           type="submit"
           disabled={status === 'loading' || !url.trim()}
-          className="w-full py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 disabled:opacity-50 transition-colors"
+          className="w-full py-2 bg-neutral-700 text-white text-sm font-medium rounded-lg hover:bg-neutral-600 disabled:opacity-50 transition-colors"
         >
           {status === 'loading' ? '取得中...' : '追加 →'}
         </button>

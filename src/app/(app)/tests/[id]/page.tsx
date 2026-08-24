@@ -92,7 +92,7 @@ export default async function TestDetailPage({ params }: { params: Promise<{ id:
         <div className="bg-neutral-900 rounded-xl border border-neutral-800 p-6 space-y-2">
           <h2 className="font-semibold text-neutral-200">参考にしたベンチマーク動画</h2>
           {competitor.appeal_angle && <p className="text-sm text-neutral-300">訴求: {competitor.appeal_angle}</p>}
-          <a href={competitor.url} target="_blank" rel="noopener noreferrer" className="text-indigo-400 text-sm hover:underline break-all">
+          <a href={competitor.url} target="_blank" rel="noopener noreferrer" className="text-neutral-300 text-sm hover:underline break-all">
             {competitor.video_title ?? competitor.url}
           </a>
         </div>

@@ -33,7 +33,7 @@ export default function AnalyzePanel({
       <button
         onClick={analyze}
         disabled={loading}
-        className="px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 disabled:opacity-50 transition-colors"
+        className="px-4 py-2 bg-neutral-700 text-white text-sm font-medium rounded-lg hover:bg-neutral-600 disabled:opacity-50 transition-colors"
       >
         {loading ? '分析中...' : hasAnalysis ? '✨ 再分析' : '✨ AI分析を実行'}
       </button>
