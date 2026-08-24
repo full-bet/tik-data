@@ -59,7 +59,7 @@ export default async function NewTestPage() {
       </div>
 
       <form action={createTest} className="bg-neutral-900 rounded-xl border border-neutral-800 p-6 space-y-5">
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-neutral-300 mb-1">
               テスト名 <span className="text-red-400">*</span>
@@ -98,7 +98,7 @@ export default async function NewTestPage() {
           />
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-neutral-300 mb-1">対象アカウント種別</label>
             <input
@@ -174,7 +174,7 @@ export default async function NewTestPage() {
           />
         </div>
 
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div>
             <label className="block text-sm font-medium text-neutral-300 mb-1">編集者</label>
             <select

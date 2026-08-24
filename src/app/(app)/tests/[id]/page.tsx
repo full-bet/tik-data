@@ -61,7 +61,7 @@ export default async function TestDetailPage({ params }: { params: Promise<{ id:
       <div className="bg-neutral-900 rounded-xl border border-neutral-800 p-6 space-y-4">
         <h2 className="font-semibold text-neutral-200">概要</h2>
         <Field label="このtestでやること - What & How" value={test.what_how} />
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <Field label="対象アカウント種別" value={test.account_persona} />
           <Field label="勝利条件" value={test.win_condition} />
         </div>
@@ -119,7 +119,7 @@ export default async function TestDetailPage({ params }: { params: Promise<{ id:
 
       <div className="bg-neutral-900 rounded-xl border border-neutral-800 p-6 space-y-4">
         <h2 className="font-semibold text-neutral-200">編集・撮影・レビュー方針</h2>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <Field label="編集者" value={memberName(test.editor_member_id)} />
           <Field label="撮影者" value={memberName(test.shooter_member_id)} />
           <Field label="レビュアー" value={memberName(test.reviewer_member_id)} />

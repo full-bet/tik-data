@@ -80,7 +80,7 @@ export default async function CompetitorDetailPage({
               </div>
 
               {/* フック / CTA */}
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {comp.hook && (
                   <div className="bg-amber-500/10 rounded-lg p-3">
                     <p className="text-xs font-semibold text-amber-400 mb-1">🪝 冒頭フック</p>
