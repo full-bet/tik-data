@@ -6,7 +6,7 @@ export default async function CastsPage() {
 
   const { data: casts } = await supabase
     .from('cast_profiles')
-    .select('member_id,age,gender,exposure_range,ng_notes,contact_method,members!cast_profiles_member_id_members_id_fk(name,memo)')
+    .select('member_id,age,gender,exposure_range,ng_notes,contact_method,members!cast_profiles_member_id_members_id_fk(name,memo),referrer:members!cast_profiles_referrer_member_id_members_id_fk(name)')
     .order('created_at', { ascending: false })
 
   type CastRow = {
@@ -17,6 +17,7 @@ export default async function CastsPage() {
     ng_notes: string | null
     contact_method: string | null
     members: { name: string; memo: string | null } | null
+    referrer: { name: string } | null
   }
   const rows = (casts ?? []) as unknown as CastRow[]
 
@@ -49,9 +50,10 @@ export default async function CastsPage() {
       ) : (
         <div className="grid gap-3">
           {rows.map(c => (
-            <div
+            <Link
               key={c.member_id}
-              className="bg-neutral-900 rounded-xl border border-neutral-800 p-5"
+              href={`/members/${c.member_id}`}
+              className="block bg-neutral-900 rounded-xl border border-neutral-800 p-5 hover:border-neutral-700 transition-colors"
             >
               <div className="flex items-start justify-between">
                 <div>
@@ -66,13 +68,16 @@ export default async function CastsPage() {
                   </span>
                 )}
               </div>
+              {c.referrer?.name && (
+                <p className="text-neutral-500 text-sm mt-1">紹介者: {c.referrer.name}</p>
+              )}
               {c.exposure_range && (
                 <p className="text-neutral-400 text-sm mt-3">露出可能範囲: {c.exposure_range}</p>
               )}
               {c.ng_notes && (
                 <p className="text-red-400 text-sm mt-1">NG: {c.ng_notes}</p>
               )}
-            </div>
+            </Link>
           ))}
         </div>
       )}

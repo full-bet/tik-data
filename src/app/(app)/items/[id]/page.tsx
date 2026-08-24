@@ -1,7 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { updateItemField, deleteItem } from '../actions'
+import { updateItemField, deleteItem, linkItemMaterial, unlinkItemMaterial, linkItemAiTool, unlinkItemAiTool } from '../actions'
 import TranscribeUpload from './TranscribeUpload'
 
 export default async function ItemDetailPage({ params }: { params: Promise<{ id: string }> }) {
@@ -10,6 +10,34 @@ export default async function ItemDetailPage({ params }: { params: Promise<{ id:
 
   const { data: item } = await supabase.from('items').select('*').eq('id', id).single()
   if (!item) notFound()
+
+  const [
+    { data: usedMaterials },
+    { data: allMaterials },
+    { data: accounts },
+    { data: deals },
+    { data: scripts },
+    { data: usedAiTools },
+    { data: allAiTools },
+  ] = await Promise.all([
+    supabase.from('item_materials').select('id,materials(id,title,file_url)').eq('item_id', id),
+    supabase.from('materials').select('id,title').order('title'),
+    supabase.from('accounts').select('id,tiktok_username,tiktok_display_name').order('created_at', { ascending: false }),
+    supabase.from('deals').select('id,name').order('name'),
+    supabase.from('scripts').select('id,title').order('title'),
+    supabase.from('item_ai_tools').select('id,ai_tools(id,name)').eq('item_id', id),
+    supabase.from('ai_tools').select('id,name').order('name'),
+  ])
+
+  type UsedMaterialRow = { id: string; materials: { id: string; title: string; file_url: string | null } | null }
+  const usedMaterialRows = (usedMaterials ?? []) as unknown as UsedMaterialRow[]
+  const usedMaterialIds = new Set(usedMaterialRows.map(r => r.materials?.id).filter(Boolean))
+  const availableMaterials = (allMaterials ?? []).filter(m => !usedMaterialIds.has(m.id))
+
+  type UsedAiToolRow = { id: string; ai_tools: { id: string; name: string } | null }
+  const usedAiToolRows = (usedAiTools ?? []) as unknown as UsedAiToolRow[]
+  const usedAiToolIds = new Set(usedAiToolRows.map(r => r.ai_tools?.id).filter(Boolean))
+  const availableAiTools = (allAiTools ?? []).filter(t => !usedAiToolIds.has(t.id))
 
   // 最新スナップショット（xlsxインポートデータ）
   const { data: snapshot } = await supabase
@@ -41,12 +69,77 @@ export default async function ItemDetailPage({ params }: { params: Promise<{ id:
             <SaveField itemId={id} field="category" label="カテゴリ" defaultValue={item.category ?? ''} placeholder="例: 商品紹介" />
             <SaveField itemId={id} field="hook" label="冒頭フック" defaultValue={item.hook ?? ''} placeholder="例: 〇〇な人は見て" />
           </div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <SaveSelect
+              itemId={id}
+              field="account_id"
+              label="アカウント"
+              defaultValue={item.account_id ?? ''}
+              options={(accounts ?? []).map(a => ({ value: a.id, label: a.tiktok_display_name ?? a.tiktok_username ?? a.id }))}
+            />
+            <SaveSelect
+              itemId={id}
+              field="deal_id"
+              label="商材"
+              defaultValue={item.deal_id ?? ''}
+              options={(deals ?? []).map(d => ({ value: d.id, label: d.name }))}
+            />
+            <SaveSelect
+              itemId={id}
+              field="script_id"
+              label="台本"
+              defaultValue={item.script_id ?? ''}
+              options={(scripts ?? []).map(s => ({ value: s.id, label: s.title }))}
+            />
+          </div>
           {item.video_url && (
             <a href={item.video_url} target="_blank" rel="noopener noreferrer" className="inline-block text-xs text-indigo-400 hover:underline">
               TikTokで見る →
             </a>
           )}
         </div>
+      </div>
+
+      {/* 使用素材 */}
+      <div className="bg-neutral-900 rounded-xl border border-neutral-800 p-6 mb-5">
+        <h2 className="font-semibold text-neutral-200 mb-4">使用素材</h2>
+
+        {usedMaterialRows.length > 0 ? (
+          <div className="space-y-2 mb-5">
+            {usedMaterialRows.map(r => (
+              <div key={r.id} className="flex items-center justify-between px-3 py-2 border border-neutral-800 rounded-lg">
+                <span className="text-sm text-white truncate">{r.materials?.title ?? '(削除済み素材)'}</span>
+                <UnlinkMaterialButton itemId={id} linkId={r.id} />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p className="text-neutral-500 text-sm mb-5">使用素材はまだ紐付けられていません</p>
+        )}
+
+        {availableMaterials.length > 0 && (
+          <LinkMaterialForm itemId={id} materials={availableMaterials} />
+        )}
+      </div>
+
+      {/* 使用AIツール */}
+      <div className="bg-neutral-900 rounded-xl border border-neutral-800 p-6 mb-5">
+        <h2 className="font-semibold text-neutral-200 mb-4">使用AIツール</h2>
+
+        {usedAiToolRows.length > 0 ? (
+          <div className="flex flex-wrap gap-2 mb-5">
+            {usedAiToolRows.map(r => (
+              <span key={r.id} className="inline-flex items-center gap-2 px-3 py-1.5 bg-indigo-500/10 text-indigo-400 rounded-lg text-xs font-medium">
+                {r.ai_tools?.name ?? '(削除済み)'}
+                <UnlinkAiToolButton itemId={id} linkId={r.id} />
+              </span>
+            ))}
+          </div>
+        ) : (
+          <p className="text-neutral-500 text-sm mb-5">使用AIツールはまだ記録されていません</p>
+        )}
+
+        <LinkAiToolForm itemId={id} availableTools={availableAiTools} />
       </div>
 
       {/* 台本 */}
@@ -173,6 +266,85 @@ function SaveField({ itemId, field, label, defaultValue, placeholder, type = 'te
   )
 }
 
+function SaveSelect({ itemId, field, label, defaultValue, options }: {
+  itemId: string; field: string; label: string; defaultValue: string; options: { value: string; label: string }[]
+}) {
+  async function save(formData: FormData) {
+    'use server'
+    const value = formData.get(field) as string
+    await updateItemField(itemId, field, value || null)
+  }
+  return (
+    <div>
+      <label className="block text-xs font-medium text-neutral-500 mb-1">{label}</label>
+      <form action={save} className="flex gap-2">
+        <select
+          name={field}
+          defaultValue={defaultValue}
+          className="flex-1 min-w-0 px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        >
+          <option value="">未設定</option>
+          {options.map(o => (
+            <option key={o.value} value={o.value}>{o.label}</option>
+          ))}
+        </select>
+        <button type="submit" className="px-3 py-2 bg-neutral-800 hover:bg-neutral-700 text-neutral-400 rounded-lg text-xs transition-colors">
+          保存
+        </button>
+      </form>
+    </div>
+  )
+}
+
+function LinkAiToolForm({ itemId, availableTools }: { itemId: string; availableTools: { id: string; name: string }[] }) {
+  async function link(formData: FormData) {
+    'use server'
+    const toolId = formData.get('ai_tool_id') as string
+    const newName = (formData.get('new_tool_name') as string)?.trim()
+    if (newName) {
+      await linkItemAiTool(itemId, newName, true)
+    } else if (toolId) {
+      await linkItemAiTool(itemId, toolId, false)
+    }
+  }
+  return (
+    <form action={link} className="flex flex-col sm:flex-row gap-2">
+      {availableTools.length > 0 && (
+        <select
+          name="ai_tool_id"
+          defaultValue=""
+          className="flex-1 px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        >
+          <option value="">既存ツールを選択</option>
+          {availableTools.map(t => (
+            <option key={t.id} value={t.id}>{t.name}</option>
+          ))}
+        </select>
+      )}
+      <input
+        name="new_tool_name"
+        placeholder="新しいツール名を入力"
+        className="flex-1 px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+      />
+      <button type="submit" className="px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors whitespace-nowrap">
+        追加
+      </button>
+    </form>
+  )
+}
+
+function UnlinkAiToolButton({ itemId, linkId }: { itemId: string; linkId: string }) {
+  async function unlink() {
+    'use server'
+    await unlinkItemAiTool(itemId, linkId)
+  }
+  return (
+    <form action={unlink} className="inline">
+      <button type="submit" className="text-indigo-300 hover:text-white">×</button>
+    </form>
+  )
+}
+
 function SaveTextarea({ itemId, field, defaultValue, placeholder }: {
   itemId: string; field: string; defaultValue: string; placeholder?: string
 }) {
@@ -216,6 +388,44 @@ function SaveNumber({ itemId, field, defaultValue }: {
       <button type="submit" className="px-2 py-1.5 bg-neutral-800 hover:bg-neutral-700 text-neutral-400 rounded-lg text-xs transition-colors">
         保存
       </button>
+    </form>
+  )
+}
+
+function LinkMaterialForm({ itemId, materials }: { itemId: string; materials: { id: string; title: string }[] }) {
+  async function link(formData: FormData) {
+    'use server'
+    const materialId = formData.get('material_id') as string
+    await linkItemMaterial(itemId, materialId)
+  }
+  return (
+    <form action={link} className="flex gap-2">
+      <select
+        name="material_id"
+        required
+        defaultValue=""
+        className="flex-1 px-3 py-2 border border-neutral-700 rounded-lg bg-neutral-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+      >
+        <option value="" disabled>素材を選択</option>
+        {materials.map(m => (
+          <option key={m.id} value={m.id}>{m.title}</option>
+        ))}
+      </select>
+      <button type="submit" className="px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors whitespace-nowrap">
+        紐付け
+      </button>
+    </form>
+  )
+}
+
+function UnlinkMaterialButton({ itemId, linkId }: { itemId: string; linkId: string }) {
+  async function unlink() {
+    'use server'
+    await unlinkItemMaterial(itemId, linkId)
+  }
+  return (
+    <form action={unlink}>
+      <button type="submit" className="text-xs text-red-400 hover:text-red-300">解除</button>
     </form>
   )
 }

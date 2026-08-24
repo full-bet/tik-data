@@ -13,6 +13,7 @@ const navItems = [
   { href: '/clients', label: '取引先', icon: '🏢' },
   { href: '/materials', label: '素材', icon: '🎞️' },
   { href: '/devices', label: '端末', icon: '📱' },
+  { href: '/auth-emails', label: '認証メアド', icon: '✉️' },
   { href: '/analytics', label: 'アナリティクス', icon: '📊' },
   { href: '/competitors', label: '競合分析', icon: '🔍' },
   { href: '/accounts', label: 'アカウント', icon: '🔗' },
