@@ -1,5 +1,34 @@
 import { createClient } from '@/lib/supabase/server'
+import { revalidatePath } from 'next/cache'
 import Link from 'next/link'
+
+const CLASSIFICATION_OPTIONS = [
+  { value: 'main', label: '本アカウント' },
+  { value: 'reply', label: 'リプライ用' },
+  { value: 'other', label: 'その他' },
+] as const
+
+async function updateAccountClassifications(formData: FormData) {
+  'use server'
+  const supabase = await createClient()
+  const accountId = formData.get('account_id') as string
+  const newTypes = new Set(formData.getAll('types') as string[])
+
+  const { data: existing } = await supabase.from('account_classifications').select('id,type').eq('account_id', accountId)
+  const currentTypes = new Set((existing ?? []).map(r => r.type))
+
+  const toRemove = (existing ?? []).filter(r => !newTypes.has(r.type)).map(r => r.id)
+  if (toRemove.length > 0) {
+    await supabase.from('account_classifications').delete().in('id', toRemove)
+  }
+
+  const toAdd = [...newTypes].filter(t => !currentTypes.has(t))
+  if (toAdd.length > 0) {
+    await supabase.from('account_classifications').insert(toAdd.map(type => ({ account_id: accountId, type })))
+  }
+
+  revalidatePath('/accounts')
+}
 
 export default async function AccountsPage({
   searchParams,
@@ -13,6 +42,16 @@ export default async function AccountsPage({
     .from('accounts')
     .select('*')
     .order('created_at', { ascending: false })
+
+  const accountIds = (accounts ?? []).map(a => a.id)
+  const { data: classifications } = accountIds.length
+    ? await supabase.from('account_classifications').select('account_id,type').in('account_id', accountIds)
+    : { data: [] }
+
+  const classificationsByAccount = new Map<string, Set<string>>()
+  for (const c of classifications ?? []) {
+    classificationsByAccount.set(c.account_id, (classificationsByAccount.get(c.account_id) ?? new Set()).add(c.type))
+  }
 
   return (
     <div className="p-4 sm:p-8 max-w-3xl">
@@ -58,8 +97,11 @@ export default async function AccountsPage({
             const expiresAt = account.token_expires_at ? new Date(account.token_expires_at) : null
             const isExpired = expiresAt ? expiresAt < new Date() : false
 
+            const currentTypes = classificationsByAccount.get(account.id) ?? new Set<string>()
+
             return (
-              <div key={account.id} className="bg-neutral-900 rounded-xl border border-neutral-800 p-5 flex items-center gap-4">
+              <div key={account.id} className="bg-neutral-900 rounded-xl border border-neutral-800 p-5">
+              <div className="flex items-center gap-4">
                 {account.tiktok_avatar_url ? (
                   <img
                     src={account.tiktok_avatar_url}
@@ -105,6 +147,27 @@ export default async function AccountsPage({
                     </span>
                   )}
                 </div>
+              </div>
+
+              <form action={updateAccountClassifications} className="flex flex-wrap items-center gap-3 mt-4 pt-4 border-t border-neutral-800">
+                <input type="hidden" name="account_id" value={account.id} />
+                <span className="text-xs text-neutral-500">分類:</span>
+                {CLASSIFICATION_OPTIONS.map(opt => (
+                  <label key={opt.value} className="flex items-center gap-1.5 text-xs text-neutral-300 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      name="types"
+                      value={opt.value}
+                      defaultChecked={currentTypes.has(opt.value)}
+                      className="accent-indigo-600"
+                    />
+                    {opt.label}
+                  </label>
+                ))}
+                <button type="submit" className="px-2.5 py-1 bg-neutral-800 hover:bg-neutral-700 text-neutral-400 rounded text-xs transition-colors">
+                  保存
+                </button>
+              </form>
               </div>
             )
           })}

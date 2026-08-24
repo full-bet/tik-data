@@ -47,7 +47,11 @@ export default async function DevicesPage() {
       ) : (
         <div className="grid gap-3">
           {rows.map(d => (
-            <div key={d.id} className="bg-neutral-900 rounded-xl border border-neutral-800 p-5">
+            <Link
+              key={d.id}
+              href={`/devices/${d.id}`}
+              className="block bg-neutral-900 rounded-xl border border-neutral-800 p-5 hover:border-neutral-700 transition-colors"
+            >
               <div className="flex items-start justify-between">
                 <div>
                   <p className="font-semibold text-white">{d.name}</p>
@@ -60,7 +64,7 @@ export default async function DevicesPage() {
                 )}
               </div>
               {d.usage_note && <p className="text-neutral-400 text-sm mt-2">{d.usage_note}</p>}
-            </div>
+            </Link>
           ))}
         </div>
       )}
